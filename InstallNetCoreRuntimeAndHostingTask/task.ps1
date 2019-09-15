@@ -67,7 +67,7 @@ try
         $installationArguments += " /norestart"
     }
     Write-Host Execute $installerFilePath with the following arguments: $installationArguments
-    Write-Host Executing...
+    Write-Host Executing installer. This could take a few minutes...
     $process = Start-Process -FilePath $installerFilePath -ArgumentList $installationArguments -Wait -PassThru
     Write-Host Installer completed with exitcode: $process.ExitCode
 
