@@ -11,7 +11,7 @@
         }
     ],
     "icons": {
-        "default": "InstallNetCoreRuntimeAndHostingTask/icon.png"
+        "default": "icon.png"
      },
     "categories": [
         "Azure Pipelines"
