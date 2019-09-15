@@ -16,7 +16,7 @@
         {
             "name": "version",
             "type": "pickList",
-            "label": "Action",
+            "label": "Version",
             "defaultValue": "3.0",
             "required": true,
             "helpMarkDown": "Version of .NET Core to install.",

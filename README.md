@@ -7,3 +7,4 @@ Azure DevOps pipeline task that installs/updates the .NET Core runtime and hosti
 - 2.2
 - 3.0
 
+## Arguments
