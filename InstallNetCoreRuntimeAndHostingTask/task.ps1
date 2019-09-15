@@ -13,6 +13,7 @@ try
     
     $fileName = "dotnet-hosting-win.exe"
     $releasesJSONURL = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/" + $dotNetVersion + "/releases.json"
+    $workingDirectory = Get-VstsTaskVariable -Name "System.DefaultWorkingDirectory"
     $webClient = new-Object System.Net.WebClient
 
 
@@ -45,7 +46,7 @@ try
 
 
     # Create folder for installer
-    $installerFolder = Join-Path "$(System.DefaultWorkingDirectory)" $releases.'latest-release'
+    $installerFolder = Join-Path $workingDirectory $releases.'latest-release'
     $installerFilePath = Join-Path $installerFolder $fileName
     $tmp = New-Item -Path $installerFolder -ItemType Directory
 
