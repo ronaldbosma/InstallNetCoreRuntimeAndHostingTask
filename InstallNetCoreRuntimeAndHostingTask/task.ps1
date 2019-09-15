@@ -43,6 +43,8 @@ try
         [Environment]::Exit(1)
     }
 
+
+    # Create folder for installer
     $installerFolder = Join-Path "$(System.DefaultWorkingDirectory)" $releases.'latest-release'
     $installerFilePath = Join-Path $installerFolder $fileName
     $tmp = New-Item -Path $installerFolder -ItemType Directory
