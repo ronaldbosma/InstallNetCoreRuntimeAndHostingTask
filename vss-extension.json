@@ -1,0 +1,50 @@
+{
+    "manifestVersion": 1,
+    "id": "InstallNetCoreRuntimeAndHosting",
+    "version": "0..0",
+    "name": "Install .NET Core Runtime & Hosting",
+    "publisher": "rbosma",
+    "description": "Azure DevOps pipeline task that installs/updates the .NET Core runtime and hosting bundle.",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],    
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "tags": [
+        ".NET Core",
+        "ASP.NET Core",
+        "Runtime & Hosting Bundle"
+    ],
+    "links": {
+        "getstarted": {
+            "uri": "https://github.com/ronaldbosma/InstallNetCoreRuntimeAndHostingTask/blob/master/README.md"
+        },
+        "support": {
+            "uri": "https://github.com/ronaldbosma/InstallNetCoreRuntimeAndHostingTask/issues"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/ronaldbosma/InstallNetCoreRuntimeAndHostingTask"
+    },
+    "files": [
+        {
+            "path": "InstallNetCoreRuntimeAndHostingTask"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "InstallNetCoreRuntimeAndHosting",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "InstallNetCoreRuntimeAndHostingTask"
+            }
+        }
+    ]
+}
