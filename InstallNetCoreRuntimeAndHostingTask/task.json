@@ -29,7 +29,7 @@
         {
             "name": "norestart",
             "type": "boolean",
-            "label": "No Restart?",
+            "label": "No Restart",
             "defaultValue": false,
             "required": true,
             "helpMarkDown": "If true, the `/norestart` argument will be passed to the installer to suppress any attempts to restart."
