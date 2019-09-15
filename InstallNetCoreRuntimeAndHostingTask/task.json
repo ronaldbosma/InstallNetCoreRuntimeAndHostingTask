@@ -1,0 +1,43 @@
+{
+    "id": "232044c0-f2b9-4a68-895c-84c988472d6e",
+    "name": "InstallNetCoreRuntimeAndHosting",
+    "friendlyName": "Install .NET Core Runtime & Hosting Bundle",
+    "description": "Azure DevOps pipeline task that installs/updates the .NET Core runtime and hosting bundle.",
+    "helpMarkDown": "",
+    "category": "Utility",
+    "author": "Ronald Bosma",
+    "version": {
+        "Major": 0,
+        "Minor": 1,
+        "Patch": 0
+    },
+    "instanceNameFormat": "Install .NET Core Runtime & Hosting Version $(version)",
+    "inputs": [
+        {
+            "name": "version",
+            "type": "pickList",
+            "label": "Action",
+            "defaultValue": "3.0",
+            "required": true,
+            "helpMarkDown": "Version of .NET Core to install.",
+            "options": {
+              "2.1": "2.1",
+              "2.2": "2.2",
+              "3.0": "3.0"
+            }
+        },
+        {
+            "name": "norestart",
+            "type": "boolean",
+            "label": "No Restart?",
+            "defaultValue": false,
+            "required": true,
+            "helpMarkDown": "If true, the `/norestart` argument will be passed to the installer to suppress any attempts to restart."
+        }
+    ],
+    "execution": {
+        "PowerShell3": {
+          "target": "task.ps1"
+        }
+    }
+}
