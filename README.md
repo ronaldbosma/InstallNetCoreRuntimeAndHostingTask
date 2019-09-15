@@ -26,7 +26,7 @@ Azure DevOps pipeline task that installs/updates the .NET Core runtime and hosti
 
 This task wraps a PowerShell script that:
 1. retrieves the latest available .NET Core version from the appropriate `releases.json`, like https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/3.0/releases.json
-2. retrieves the download URL for the .NET Core Runtime & Hosting bundle installer (`dotnet-hosting-win.exe`)
+2. looks in the `releases.json` for the download URL of the .NET Core Runtime & Hosting bundle installer (`dotnet-hosting-win.exe`)
 3. downloads the installer
 4. executes the installer
 5. uploads any logs created by the installer
