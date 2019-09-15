@@ -15,6 +15,7 @@ try
     $releasesJSONURL = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/" + $dotNetVersion + "/releases.json"
     $webClient = new-Object System.Net.WebClient
 
+
     # Load releases.json
     Write-Host Load release data from: $releasesJSONURL
     $releases = $webClient.DownloadString($releasesJSONURL) | ConvertFrom-Json
@@ -46,15 +47,18 @@ try
     $installerFilePath = Join-Path $installerFolder $fileName
     $tmp = New-Item -Path $installerFolder -ItemType Directory
 
+
     # Download installer
     Write-Host Downloading $file.name from: $file.url
     $webClient.DownloadFile($file.url, $installerFilePath)
     Write-Host Downloaded $file.name to: $installerFilePath
 
 
+    # Create log folder
     $logFolder = Join-Path $installerFolder "logs"
     $logFilePath = Join-Path $logFolder "$fileName.log"
     $tmp = New-Item -Path $logFolder -ItemType Directory
+
 
     # Execute installer
     $installationArguments = "/passive /log $logFilePath"
