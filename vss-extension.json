@@ -16,6 +16,14 @@
     "categories": [
         "Azure Pipelines"
     ],
+    "content": {
+       "details": {
+           "path": "README.md"
+       },
+       "license": {
+           "path": "LICENSE"
+       }
+   },
     "tags": [
         ".NET Core",
         "ASP.NET Core",
