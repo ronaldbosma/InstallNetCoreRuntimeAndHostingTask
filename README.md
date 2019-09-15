@@ -14,6 +14,14 @@ Azure DevOps pipeline task that installs/updates the .NET Core runtime and hosti
 | Version | Version of .NET Core to install. |
 | No Restart | If true, the `/norestart` argument will be passed to the installer to suppress any attempts to restart. |
 
+## How to use
+
+1. Install the [Install .NET Core Runtime & Hosting Bundle](https://marketplace.visualstudio.com/items?itemName=InstallNetCoreRuntimeAndHosting) extension from the Marketplace in your Azure DevOps organization.
+2. Create a new release pipeline.
+3. Add a deployment group job.
+4. Add the `Install .NET Core Runtime & Hosting Bundle` task to the deployment group job.
+5. Configure the version you want to install.
+
 ## How it works
 
 This task wraps a PowerShell script that:
