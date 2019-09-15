@@ -9,7 +9,10 @@
         {
             "id": "Microsoft.VisualStudio.Services"
         }
-    ],    
+    ],
+    "icons": {
+        "default": "InstallNetCoreRuntimeAndHostingTask/icon.png"
+     },
     "categories": [
         "Azure Pipelines"
     ],
