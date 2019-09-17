@@ -10,11 +10,18 @@ try
 
     $dotNetVersion = Get-VstsInput -Name version -Require
     $norestart = Get-VstsInput -Name norestart -Require
+    $useProxy = Get-VstsInput -Name useProxy -Require
+    $proxyServerAddress = Get-VstsInput -Name proxyServerAddress -Require
     
     $fileName = "dotnet-hosting-win.exe"
     $releasesJSONURL = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/" + $dotNetVersion + "/releases.json"
     $workingDirectory = Get-VstsTaskVariable -Name "System.DefaultWorkingDirectory"
+
     $webClient = new-Object System.Net.WebClient
+    if ($useProxy) {
+        Write-Host Proxy server $proxyServerAddress configured
+        $webClient.Proxy = new-Object System.Net.WebProxy $proxyServerAddress
+    }
 
 
     # Load releases.json
