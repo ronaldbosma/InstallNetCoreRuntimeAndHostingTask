@@ -1,0 +1,22 @@
+# Using tasks from the 'Azure DevOps Extension Tasks' extension:
+# https://marketplace.visualstudio.com/items?itemName=ms-devlabs.vsts-developer-tools-build-tasks
+
+trigger:
+- master
+
+stages:
+
+- stage: 'Package Extension'
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    workspace:
+      clean: all
+
+    steps:
+    - task: PackageAzureDevOpsExtension@2
+      inputs:
+        rootFolder: 'System.DefaultWorkingDirectory'
+        updateTasksVersion: false
