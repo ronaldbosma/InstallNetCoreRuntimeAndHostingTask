@@ -55,6 +55,12 @@ try
     # Create folder for installer
     $installerFolder = Join-Path $workingDirectory $releases.'latest-release'
     $installerFilePath = Join-Path $installerFolder $fileName
+
+    if (Test-Path $installerFolder)
+    {
+        # Remove the folder to cleanup old logs etc.
+        Remove-Item $installerFolder -Recurs -Force
+    }
     $tmp = New-Item -Path $installerFolder -ItemType Directory
 
 
