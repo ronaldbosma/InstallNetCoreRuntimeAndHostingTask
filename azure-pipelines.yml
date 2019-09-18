@@ -22,5 +22,5 @@ stages:
         
     - task: PackageAzureDevOpsExtension@2
       inputs:
-        rootFolder: 'System.DefaultWorkingDirectory'
+        rootFolder: '$(System.DefaultWorkingDirectory)'
         updateTasksVersion: false
