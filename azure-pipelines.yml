@@ -55,7 +55,7 @@ stages:
         connectTo: 'VsTeam'
         connectedServiceName: 'Visual Studio Marketplace'
         fileType: 'vsix'
-        vsixFile: '$(Pipeline.Workspace)/packages/*.vsix'
+        vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
         updateTasksVersion: false
         extensionVisibility: 'private'
         shareWith: '$(share-with-organization)'
