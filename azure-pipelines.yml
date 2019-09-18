@@ -28,3 +28,34 @@ stages:
 
     - publish: '$(Build.ArtifactStagingDirectory)/extension'
       artifact: 'extension'
+
+
+
+- stage: 'PublishPrivateVersion'
+  displayName: 'Publish Private Version Of Extension'
+  dependsOn: 'PackageExtension'
+  condition: succeeded()
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+    - checkout: none
+    
+    - task: TfxInstaller@2
+      inputs:
+        version: 'v0.6.x'
+
+    - download: current
+      artifact: 'extension'
+    
+    - task: PublishAzureDevOpsExtension@2
+      inputs:
+        connectTo: 'VsTeam'
+        connectedServiceName: 'Visual Studio Marketplace'
+        fileType: 'vsix'
+        vsixFile: '$(Pipeline.Workspace)/packages/*.vsix'
+        updateTasksVersion: false
+        extensionVisibility: 'private'
+        shareWith: '$(share-with-organization)'
