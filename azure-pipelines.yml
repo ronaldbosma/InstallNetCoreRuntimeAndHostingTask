@@ -6,7 +6,7 @@ trigger:
 
 stages:
 
-- stage: 'Package Extension'
+- stage: 'PackageExtension'
   jobs:
   - job:
     pool:
