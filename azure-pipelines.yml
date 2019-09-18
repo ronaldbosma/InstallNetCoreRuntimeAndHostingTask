@@ -23,4 +23,8 @@ stages:
     - task: PackageAzureDevOpsExtension@2
       inputs:
         rootFolder: '$(System.DefaultWorkingDirectory)'
+        outputPath: '$(Build.ArtifactStagingDirectory)/extension'
         updateTasksVersion: false
+
+    - publish: '$(Build.ArtifactStagingDirectory)/extension'
+      artifact: 'extension'
