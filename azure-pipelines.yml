@@ -16,6 +16,10 @@ stages:
       clean: all
 
     steps:
+    - task: TfxInstaller@2
+      inputs:
+        version: 'v0.6.x'
+        
     - task: PackageAzureDevOpsExtension@2
       inputs:
         rootFolder: 'System.DefaultWorkingDirectory'
