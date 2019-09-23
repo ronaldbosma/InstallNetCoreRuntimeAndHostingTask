@@ -30,3 +30,21 @@ This task wraps a PowerShell script that:
 3. downloads the installer
 4. executes the installer
 5. uploads any logs created by the installer
+
+## Know errors
+
+If you get the error below then `https://dotnetcli.blob.core.windows.net` is not a Trusted Site. You can verify this by browsing to the full URL in Internet Explorer. You'll get an error that the URL is not part of you Trusted Sites. Add `dotnetcli.blob.core.windows.net` to the Trusted Sites fix this error.
+
+```
+Load release data from: https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/3.0/releases.json
+Exception calling "DownloadString" with "1" argument(s): "The underlying 
+connection was closed: An unexpected error occurred on a receive."
+At C:\azagent\A1\_work\_temp\39753a3f-3f3e-4351-b612-3d286ccd9f29.ps1:20 char:5
++     $releases = $webClient.DownloadString($releasesJSONURL) | Convert ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], ParentContainsErrorRecordE 
+##[error]PowerShell exited with code '1'.
+   xception
+    + FullyQualifiedErrorId : WebException
+ 
+```
