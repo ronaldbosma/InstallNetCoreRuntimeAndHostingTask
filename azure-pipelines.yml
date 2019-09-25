@@ -17,8 +17,9 @@ stages:
 
     steps:
     - powershell: |
-          New-Item ps_modules -ItemType Directory
-          Save-Module -Name VstsTaskSdk -Path .\ps_modules
+          New-Item ".\InstallNetCoreRuntimeAndHostingTask\ps_modules" -ItemType Directory
+          Save-Module -Name VstsTaskSdk -Path ".\InstallNetCoreRuntimeAndHostingTask\ps_modules"
+          Write-Host "VstsTaskSdk PowerShell module saved"
       displayName: 'Download Required Powershell Modules'
 
     - task: TfxInstaller@2
