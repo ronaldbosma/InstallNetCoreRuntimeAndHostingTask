@@ -1,0 +1,61 @@
+# Using tasks from the 'Azure DevOps Extension Tasks' extension:
+# https://marketplace.visualstudio.com/items?itemName=ms-devlabs.vsts-developer-tools-build-tasks
+
+trigger:
+- master
+
+stages:
+
+- stage: 'PackageExtension'
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    workspace:
+      clean: all
+
+    steps:
+    - task: TfxInstaller@2
+      inputs:
+        checkLatest: true
+        
+    - task: PackageAzureDevOpsExtension@2
+      inputs:
+        rootFolder: '$(System.DefaultWorkingDirectory)'
+        outputPath: '$(Build.ArtifactStagingDirectory)/extension'
+        updateTasksVersion: false
+
+    - publish: '$(Build.ArtifactStagingDirectory)/extension'
+      artifact: 'extension'
+
+
+
+- stage: 'PublishPrivateVersion'
+  displayName: 'Publish Private Version Of Extension'
+  dependsOn: 'PackageExtension'
+  condition: succeeded()
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+    - checkout: none
+    
+    - task: TfxInstaller@2
+      inputs:
+        checkLatest: true
+
+    - download: current
+      artifact: 'extension'
+    
+    - task: PublishAzureDevOpsExtension@2
+      inputs:
+        connectTo: 'VsTeam'
+        connectedServiceName: 'Visual Studio Marketplace'
+        fileType: 'vsix'
+        vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
+        updateTasksVersion: false
+        extensionVisibility: 'private'
+        shareWith: '$(share-with-organization)'
