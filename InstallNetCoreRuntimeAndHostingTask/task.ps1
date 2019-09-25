@@ -35,7 +35,7 @@ try
     # Select the latest release
     $latestRelease = $releases.releases | Where-Object { ($_.'release-version' -eq $releases.'latest-release') -and ($_.'release-date' -eq $releases.'latest-release-date') }
         
-    if ($latestRelease -eq $null)
+    if ($null -eq $latestRelease)
     {
         Write-Host "##vso[task.logissue type=error;]No latest release found"
         [Environment]::Exit(1)
@@ -45,7 +45,7 @@ try
     # Select the installer to download
     $file = $latestRelease.'aspnetcore-runtime'.files | Where-Object { $_.name -eq $fileName }
         
-    if ($file -eq $null)
+    if ($null -eq $file)
     {
         Write-Host "##vso[task.logissue type=error;]File $fileName not found in latest release"
         [Environment]::Exit(1)
