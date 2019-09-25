@@ -18,8 +18,8 @@ try
 
     $webClient = new-Object System.Net.WebClient
     if ($useProxy) {
-        Write-Host Proxy server $proxyServerAddress configured
         $proxyServerAddress = Get-VstsInput -Name proxyServerAddress -Require
+        Write-Host Proxy server $proxyServerAddress configured
         $webClient.Proxy = new-Object System.Net.WebProxy $proxyServerAddress
     }
 
