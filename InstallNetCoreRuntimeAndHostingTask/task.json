@@ -8,7 +8,7 @@
     "author": "Ronald Bosma",
     "version": {
         "Major": 0,
-        "Minor": 8,
+        "Minor": 9,
         "Patch": 0
     },
     "instanceNameFormat": "Install .NET Core Runtime & Hosting Version $(version)",
