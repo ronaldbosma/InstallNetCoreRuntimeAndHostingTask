@@ -17,8 +17,18 @@ stages:
 
     steps:
     - powershell: |
-          New-Item ".\InstallNetCoreRuntimeAndHostingTask\ps_modules" -ItemType Directory
-          Save-Module -Name VstsTaskSdk -Path ".\InstallNetCoreRuntimeAndHostingTask\ps_modules"
+          New-Item "./InstallNetCoreRuntimeAndHostingTask/ps_modules" -ItemType Directory
+          $moduleVersion = (Find-Module VstsTaskSdk).Version.ToString()
+          Save-Module -Name VstsTaskSdk -LiteralPath ".\InstallNetCoreRuntimeAndHostingTask\ps_modules"
+
+          # The PowerShell module is saved in a subfolder of VstsTaskSdk with the version as the name.
+          # The Task expectes the module to be in the root VstsTaskSdk folder, so we move the files.
+          $versionPath = Join-Path "./InstallNetCoreRuntimeAndHostingTask/ps_modules/VstsTaskSdk" $moduleVersion
+          if (Test-Path $versionPath -PathType Container)
+          {
+            Move-Item "$versionPath/*" "./InstallNetCoreRuntimeAndHostingTask/ps_modules/VstsTaskSdk"
+          }
+          
           Write-Host "VstsTaskSdk PowerShell module saved"
       displayName: 'Download Required Powershell Modules'
 
