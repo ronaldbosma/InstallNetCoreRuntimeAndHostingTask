@@ -16,6 +16,11 @@ stages:
       clean: all
 
     steps:
+    - powershell: |
+          New-Item ps_modules -ItemType Directory
+          Save-Module -Name VstsTaskSdk -Path .\ps_modules
+      displayName: 'Download Required Powershell Modules'
+
     - task: TfxInstaller@2
       inputs:
         checkLatest: true
