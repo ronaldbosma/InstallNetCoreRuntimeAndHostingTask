@@ -16,8 +16,8 @@ try
     $releasesJSONURL = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/" + $dotNetVersion + "/releases.json"
     $workingDirectory = Get-VstsTaskVariable -Name "System.DefaultWorkingDirectory"
 
-    $webClient = new-Object System.Net.WebClient
-    if ($useProxy) {
+    $webClient = New-Object System.Net.WebClient
+    if ($useProxy -eq $true) {
         $proxyServerAddress = Get-VstsInput -Name proxyServerAddress -Require
         Write-Host Proxy server $proxyServerAddress configured
         $webClient.Proxy = new-Object System.Net.WebProxy $proxyServerAddress
