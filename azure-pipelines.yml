@@ -28,8 +28,6 @@ stages:
           {
             Move-Item "$versionPath/*" "./InstallNetCoreRuntimeAndHostingTask/ps_modules/VstsTaskSdk"
           }
-          
-          Write-Host "VstsTaskSdk PowerShell module saved"
       displayName: 'Download Required Powershell Modules'
 
     - task: TfxInstaller@2
