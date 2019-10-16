@@ -71,5 +71,6 @@ stages:
         fileType: 'vsix'
         vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
         updateTasksVersionType: 'patch'
+        extensionVersion: '$(Build.BuildNumber)'
         extensionVisibility: 'private'
         shareWith: '$(share-with-organization)'
