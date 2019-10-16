@@ -4,6 +4,9 @@
 trigger:
 - master
 
+variables:
+  extensionVersion: '0.14'
+
 stages:
 
 - stage: 'PackageExtension'
@@ -70,6 +73,6 @@ stages:
         connectedServiceName: 'Visual Studio Marketplace'
         fileType: 'vsix'
         vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
-        extensionVersion: '0.13.$(Build.BuildNumber)'
+        extensionVersion: '$(extensionVersion).$(Build.BuildNumber)'
         extensionVisibility: 'private'
         shareWith: '$(share-with-organization)'
