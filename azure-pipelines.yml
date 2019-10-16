@@ -70,6 +70,6 @@ stages:
         connectedServiceName: 'Visual Studio Marketplace'
         fileType: 'vsix'
         vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
-        updateTasksVersion: false
+        updateTasksVersionType: 'patch'
         extensionVisibility: 'private'
-        shareWith: '$(share-with-organization)'
+        shareWith: '$(share-with-organization)''
