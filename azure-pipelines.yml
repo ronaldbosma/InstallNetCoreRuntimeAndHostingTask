@@ -72,4 +72,4 @@ stages:
         vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
         updateTasksVersionType: 'patch'
         extensionVisibility: 'private'
-        shareWith: '$(share-with-organization)''
+        shareWith: '$(share-with-organization)'
