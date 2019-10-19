@@ -1,17 +1,10 @@
-function Download-DotNetCoreInstaller([string]$dotNetVersion, [bool]$useProxy, [string]$proxyServerAddress, [string]$outputFolder)
+function Download-DotNetCoreInstaller([string]$dotNetVersion, [bool]$useProxy, [string]$proxyServerAddress, [string]$outputFilePath)
 {
-
-    $dotNetVersion = Get-VstsInput -Name version -Require
-    $norestart = Get-VstsInput -Name norestart -Require
-    $useProxy = Get-VstsInput -Name useProxy -Require
-    
     $fileName = "dotnet-hosting-win.exe"
     $releasesJSONURL = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/" + $dotNetVersion + "/releases.json"
-    $workingDirectory = Get-VstsTaskVariable -Name "System.DefaultWorkingDirectory"
 
     $webClient = New-Object System.Net.WebClient
     if ($useProxy -eq $true) {
-        $proxyServerAddress = Get-VstsInput -Name proxyServerAddress -Require
         Write-Host Proxy server $proxyServerAddress configured
         $webClient.Proxy = new-Object System.Net.WebProxy $proxyServerAddress
     }
@@ -46,19 +39,17 @@ function Download-DotNetCoreInstaller([string]$dotNetVersion, [bool]$useProxy, [
 
 
     # Create folder for installer
-    $installerFolder = Join-Path $workingDirectory $releases.'latest-release'
-    $installerFilePath = Join-Path $installerFolder $fileName
-
-    if (Test-Path $installerFolder)
+    $outputFolder = Split-Path $outputFilePath
+    if (-not(Test-Path $outputFolder))
     {
-        # Remove the folder to cleanup old logs etc.
-        Remove-Item $installerFolder -Recurs -Force
+        New-Item -Path $outputFolder -ItemType Directory | Out-Null
     }
-    $tmp = New-Item -Path $installerFolder -ItemType Directory
 
 
     # Download installer
     Write-Host Downloading $file.name from: $file.url
-    $webClient.DownloadFile($file.url, $installerFilePath)
-    Write-Host Downloaded $file.name to: $installerFilePath
+    $webClient.DownloadFile($file.url, $outputFilePath)
+    Write-Host Downloaded $file.name to: $outputFilePath
+
+    return $outputFilePath
 }
