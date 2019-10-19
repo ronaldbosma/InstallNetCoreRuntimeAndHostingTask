@@ -10,8 +10,8 @@ try
     . "$PSScriptRoot\functions.ps1"
 
     $dotNetVersion = Get-VstsInput -Name version -Require
-    $norestart = Get-VstsInput -Name norestart -Require -AsBool
-    $useProxy = Get-VstsInput -Name useProxy -Require -AsBool
+    $norestart = Get-VstsInput -Name norestart -AsBool -Require
+    $useProxy = Get-VstsInput -Name useProxy -AsBool -Require
     $proxyServerAddress = ""
     if ($useProxy -eq $true) {
         $proxyServerAddress = Get-VstsInput -Name proxyServerAddress -Require
