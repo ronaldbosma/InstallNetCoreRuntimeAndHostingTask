@@ -19,7 +19,7 @@
             "label": "Action",
             "defaultValue": "downloadAndInstall",
             "required": true,
-            "helpMarkDown": "The action that should be performed:  - Download & Install: will download the installer and than execute it.  - Download: will only download the installer.  - Install: will only execute the installer.",
+            "helpMarkDown": "The action that should be performed:<br/>- Download & Install: will download the installer and than execute it.<br/>- Download: will only download the installer.<br/>- Install: will only execute the installer.",
             "options": {
               "downloadAndInstall": "Download & Install",
               "download": "Download",
@@ -32,7 +32,7 @@
             "label": "Version",
             "defaultValue": "3.0",
             "required": true,
-            "helpMarkDown": "Version of .NET Core to install.",
+            "helpMarkDown": "Version of .NET Core to download and/or install.",
             "options": {
               "2.1": "2.1",
               "2.2": "2.2",
