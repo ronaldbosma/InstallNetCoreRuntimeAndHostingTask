@@ -38,7 +38,7 @@
               "2.2": "2.2",
               "3.0": "3.0"
             },
-            "visibleRule": "action == downloadAndInstall || action == install"
+            "visibleRule": "action == downloadAndInstall || action == download"
         },
         {
             "name": "norestart",
