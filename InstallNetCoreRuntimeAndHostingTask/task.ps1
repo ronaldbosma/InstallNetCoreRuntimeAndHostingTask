@@ -11,7 +11,11 @@ try
 
     $dotNetVersion = Get-VstsInput -Name version -Require
     $useProxy = Get-VstsInput -Name useProxy -Require
-    $proxyServerAddress = Get-VstsInput -Name proxyServerAddress -Require
+    $proxyServerAddress = ""
+    if ($useProxy)
+    {
+        $proxyServerAddress = Get-VstsInput -Name proxyServerAddress -Require
+    }
 
     $workingDirectory = Get-VstsTaskVariable -Name "System.DefaultWorkingDirectory"
     $workingDirectory = Join-Path $workingDirectory $dotNetVersion
