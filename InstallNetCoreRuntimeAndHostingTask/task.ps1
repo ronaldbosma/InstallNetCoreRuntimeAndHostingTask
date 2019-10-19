@@ -13,7 +13,7 @@ try
     $norestart = Get-VstsInput -Name norestart -Require
     $useProxy = Get-VstsInput -Name useProxy -Require
     $proxyServerAddress = ""
-    if ($useProxy) {
+    if ($useProxy -eq $true) {
         $proxyServerAddress = Get-VstsInput -Name proxyServerAddress -Require
     }
 

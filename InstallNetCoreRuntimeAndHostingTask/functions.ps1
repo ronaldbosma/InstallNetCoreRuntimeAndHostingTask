@@ -68,7 +68,7 @@ function Install-DotNetCore([string]$installerFilePath, [bool]$norestart)
 
     # Execute installer
     $installationArguments = "/passive /log $logFilePath"
-    if ($norestart) {
+    if ($norestart -eq $true) {
         $installationArguments += " /norestart"
     }
     Write-Host Execute $installerFilePath with the following arguments: $installationArguments
