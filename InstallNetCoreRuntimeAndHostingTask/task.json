@@ -14,6 +14,19 @@
     "instanceNameFormat": "Install .NET Core Runtime & Hosting Version $(version)",
     "inputs": [
         {
+            "name": "action",
+            "type": "pickList",
+            "label": "Action",
+            "defaultValue": "downloadAndInstall",
+            "required": true,
+            "helpMarkDown": "The action that should be performed:  - Download & Install: will download the installer and than execute it.  - Download: will only download the installer.  - Install: will only execute the installer.",
+            "options": {
+              "downloadAndInstall": "Download & Install",
+              "download": "Download",
+              "install": "Install"
+            }
+        },
+        {
             "name": "version",
             "type": "pickList",
             "label": "Version",
