@@ -21,7 +21,7 @@ try
     $workingDirectory = Join-Path $workingDirectory $dotNetVersion
     $outputFilePath = Join-Path $workingDirectory "dotnet-hosting-win.exe"
 
-    $installerFilePath = Download-DotNetCoreInstaller -dotNetVersion $dotNetVersion -useProxy $useProxy -proxyServerAddress $proxyServerAddress -outputFilePath $outputFilePath
+    $installerFilePath = Get-DotNetCoreInstaller -dotNetVersion $dotNetVersion -useProxy $useProxy -proxyServerAddress $proxyServerAddress -outputFilePath $outputFilePath
     Install-DotNetCore -installerFilePath $installerFilePath -norestart $norestart
 }
 finally

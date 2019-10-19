@@ -1,4 +1,4 @@
-function Download-DotNetCoreInstaller([string]$dotNetVersion, [bool]$useProxy, [string]$proxyServerAddress, [string]$outputFilePath)
+function Get-DotNetCoreInstaller([string]$dotNetVersion, [bool]$useProxy, [string]$proxyServerAddress, [string]$outputFilePath)
 {
     $fileName = "dotnet-hosting-win.exe"
     $releasesJSONURL = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/" + $dotNetVersion + "/releases.json"
