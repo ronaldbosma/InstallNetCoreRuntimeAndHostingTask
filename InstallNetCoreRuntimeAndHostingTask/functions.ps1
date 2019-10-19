@@ -4,7 +4,13 @@ function Download-DotNetCoreInstaller([string]$dotNetVersion, [bool]$useProxy, [
     $releasesJSONURL = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/" + $dotNetVersion + "/releases.json"
 
     $webClient = New-Object System.Net.WebClient
-    if ($useProxy -eq $true) {
+    if ($useProxy -eq $true)
+    {
+        if (($null -eq $proxyServerAddress) -or ($proxyServerAddress -eq ""))
+        {
+            Write-Host "##vso[task.logissue type=error;]Proxy server address was not specified"
+            [Environment]::Exit(1)
+        }
         Write-Host Proxy server $proxyServerAddress configured
         $webClient.Proxy = new-Object System.Net.WebProxy $proxyServerAddress
     }
