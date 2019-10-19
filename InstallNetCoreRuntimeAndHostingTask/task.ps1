@@ -6,74 +6,29 @@ try
 {
     $ErrorActionPreference = "Stop"
 
-    Import-VstsLocStrings "$PSScriptRoot\Task.json" 
+    Import-VstsLocStrings "$PSScriptRoot\Task.json"
+    . "$PSScriptRoot\functions.ps1"
 
     $dotNetVersion = Get-VstsInput -Name version -Require
-    $norestart = Get-VstsInput -Name norestart -Require
     $useProxy = Get-VstsInput -Name useProxy -Require
-    
-    $fileName = "dotnet-hosting-win.exe"
-    $releasesJSONURL = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/" + $dotNetVersion + "/releases.json"
+    $proxyServerAddress = Get-VstsInput -Name proxyServerAddress -Require
+
     $workingDirectory = Get-VstsTaskVariable -Name "System.DefaultWorkingDirectory"
+    $workingDirectory = Join-Path $workingDirectory $dotNetVersion
+    $outputFilePath = Join-Path $workingDirectory "dotnet-hosting-win.exe"
 
-    $webClient = New-Object System.Net.WebClient
-    if ($useProxy -eq $true) {
-        $proxyServerAddress = Get-VstsInput -Name proxyServerAddress -Require
-        Write-Host Proxy server $proxyServerAddress configured
-        $webClient.Proxy = new-Object System.Net.WebProxy $proxyServerAddress
-    }
+    $installerFilePath = Download-DotNetCoreInstaller -dotNetVersion $dotNetVersion -useProxy $useProxy -proxyServerAddress $proxyServerAddress -outputFilePath $outputFilePath
 
+    
+    $norestart = Get-VstsInput -Name norestart -Require
 
-    # Load releases.json
-    Write-Host Load release data from: $releasesJSONURL
-    $releases = $webClient.DownloadString($releasesJSONURL) | ConvertFrom-Json
-
-    Write-Host Latest Release Version: $releases.'latest-release'
-    Write-Host Latest Release Date: $releases.'latest-release-date'
-
-
-    # Select the latest release
-    $latestRelease = $releases.releases | Where-Object { ($_.'release-version' -eq $releases.'latest-release') -and ($_.'release-date' -eq $releases.'latest-release-date') }
-        
-    if ($null -eq $latestRelease)
-    {
-        Write-Host "##vso[task.logissue type=error;]No latest release found"
-        [Environment]::Exit(1)
-    }
-
-
-    # Select the installer to download
-    $file = $latestRelease.'aspnetcore-runtime'.files | Where-Object { $_.name -eq $fileName }
-        
-    if ($null -eq $file)
-    {
-        Write-Host "##vso[task.logissue type=error;]File $fileName not found in latest release"
-        [Environment]::Exit(1)
-    }
-
-
-    # Create folder for installer
-    $installerFolder = Join-Path $workingDirectory $releases.'latest-release'
-    $installerFilePath = Join-Path $installerFolder $fileName
-
-    if (Test-Path $installerFolder)
-    {
-        # Remove the folder to cleanup old logs etc.
-        Remove-Item $installerFolder -Recurs -Force
-    }
-    $tmp = New-Item -Path $installerFolder -ItemType Directory
-
-
-    # Download installer
-    Write-Host Downloading $file.name from: $file.url
-    $webClient.DownloadFile($file.url, $installerFilePath)
-    Write-Host Downloaded $file.name to: $installerFilePath
-
+    $installerFolder = Split-Path $installerFilePath -Parent
+    $fileName = Split-Path $installerFilePath -Leaf
 
     # Create log folder
     $logFolder = Join-Path $installerFolder "logs"
     $logFilePath = Join-Path $logFolder "$fileName.log"
-    $tmp = New-Item -Path $logFolder -ItemType Directory
+    New-Item -Path $logFolder -ItemType Directory | Out-Null
 
 
     # Execute installer
