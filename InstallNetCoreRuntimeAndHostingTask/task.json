@@ -37,7 +37,8 @@
               "2.1": "2.1",
               "2.2": "2.2",
               "3.0": "3.0"
-            }
+            },
+            "visibleRule": "action = downloadAndInstall || action = install"
         },
         {
             "name": "norestart",
@@ -45,7 +46,8 @@
             "label": "No restart",
             "defaultValue": false,
             "required": true,
-            "helpMarkDown": "If true, the `/norestart` argument will be passed to the installer to suppress any attempts to restart."
+            "helpMarkDown": "If true, the `/norestart` argument will be passed to the installer to suppress any attempts to restart.",
+            "visibleRule": "action = downloadAndInstall || action = install"
         },
         {
             "name": "useProxy",
@@ -53,7 +55,8 @@
             "label": "Use a proxy server",
             "defaultValue": false,
             "required": true,
-            "helpMarkDown": "Enable if a proxy server must be used to download the installer."
+            "helpMarkDown": "Enable if a proxy server must be used to download the installer.",
+            "visibleRule": "action = downloadAndInstall || action = download"
         },
         {
             "name": "proxyServerAddress",
@@ -62,7 +65,7 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "The URL of the proxy server. For example: http://proxy.example.com:80.",
-            "visibleRule": "useProxy = true"
+            "visibleRule": "(action = downloadAndInstall || action = download) && useProxy = true"
         }
     ],
     "execution": {
