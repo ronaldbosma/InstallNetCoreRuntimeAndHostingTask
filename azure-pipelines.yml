@@ -1,0 +1,78 @@
+# Using tasks from the 'Azure DevOps Extension Tasks' extension:
+# https://marketplace.visualstudio.com/items?itemName=ms-devlabs.vsts-developer-tools-build-tasks
+
+trigger:
+- master
+
+variables:
+  extensionVersion: '0.16'
+
+stages:
+
+- stage: 'PackageExtension'
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    workspace:
+      clean: all
+
+    steps:
+    - powershell: |
+          New-Item "./InstallNetCoreRuntimeAndHostingTask/ps_modules" -ItemType Directory
+          $moduleVersion = (Find-Module VstsTaskSdk).Version.ToString()
+          Save-Module -Name VstsTaskSdk -LiteralPath ".\InstallNetCoreRuntimeAndHostingTask\ps_modules"
+
+          # The PowerShell module is saved in a subfolder of VstsTaskSdk with the version as the name.
+          # The Task expectes the module to be in the root VstsTaskSdk folder, so we move the files.
+          $versionPath = Join-Path "./InstallNetCoreRuntimeAndHostingTask/ps_modules/VstsTaskSdk" $moduleVersion
+          if (Test-Path $versionPath -PathType Container)
+          {
+            Move-Item "$versionPath/*" "./InstallNetCoreRuntimeAndHostingTask/ps_modules/VstsTaskSdk"
+          }
+      displayName: 'Download Required Powershell Modules'
+
+    - task: TfxInstaller@2
+      inputs:
+        checkLatest: true
+        
+    - task: PackageAzureDevOpsExtension@2
+      inputs:
+        rootFolder: '$(System.DefaultWorkingDirectory)'
+        outputPath: '$(Build.ArtifactStagingDirectory)/extension'
+        updateTasksVersion: false
+
+    - publish: '$(Build.ArtifactStagingDirectory)/extension'
+      artifact: 'extension'
+
+
+
+- stage: 'PublishPrivateVersion'
+  displayName: 'Publish Private Version Of Extension'
+  dependsOn: 'PackageExtension'
+  condition: succeeded()
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+    - checkout: none
+    
+    - task: TfxInstaller@2
+      inputs:
+        checkLatest: true
+
+    - download: current
+      artifact: 'extension'
+    
+    - task: PublishAzureDevOpsExtension@2
+      inputs:
+        connectTo: 'VsTeam'
+        connectedServiceName: 'Visual Studio Marketplace'
+        fileType: 'vsix'
+        vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
+        extensionVersion: '$(extensionVersion).$(Build.BuildId)'
+        extensionVisibility: 'private'
+        shareWith: '$(share-with-organization)'
