@@ -41,7 +41,6 @@ stages:
       inputs:
         rootFolder: '$(System.DefaultWorkingDirectory)'
         outputPath: '$(Build.ArtifactStagingDirectory)/extension'
-        updateTasksVersion: false
 
     - publish: '$(Build.ArtifactStagingDirectory)/extension'
       artifact: 'extension'
@@ -74,5 +73,7 @@ stages:
         fileType: 'vsix'
         vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
         extensionVersion: '$(extensionVersion).$(Build.BuildId)'
-        extensionVisibility: 'private'
+        updateTasksVersion: true
+        updateTasksVersionType: 'major'
+        extensionVisibility: 'private_preview'
         shareWith: '$(share-with-organization)'
