@@ -55,7 +55,7 @@ function Get-DotNetCoreInstaller([string]$dotNetVersion, [bool]$useProxy, [strin
     return $outputFilePath
 }
 
-function Install-DotNetCore([string]$installerFilePath, [bool]$norestart)
+function Install-DotNetCore([string]$installerFilePath, [bool]$norestart, [bool]$iisReset)
 {
     $installerFolder = Split-Path $installerFilePath -Parent
     $fileName = Split-Path $installerFilePath -Leaf
@@ -91,5 +91,13 @@ function Install-DotNetCore([string]$installerFilePath, [bool]$norestart)
         $exitCode = $process.ExitCode
         Write-Host "##vso[task.logissue type=error;]Installation failed with code: $exitCode. See attached logs for more details."
         [Environment]::Exit(1)
+    }
+
+
+    # Reset IIS
+    if ($iisReset -eq $true)
+    {
+        Write-Host "Start IIS reset"
+        & iisreset
     }
 }

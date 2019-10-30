@@ -50,6 +50,14 @@
             "required": true,
             "helpMarkDown": "The URL of the proxy server. For example: http://proxy.example.com:80.",
             "visibleRule": "useProxy = true"
+        },
+        {
+            "name": "iisReset",
+            "type": "boolean",
+            "label": "Perform IIS reset",
+            "defaultValue": true,
+            "required": true,
+            "helpMarkDown": "If true, IIS will be reset after installation. The reset is recommended for all changes to take effect."
         }
     ],
     "execution": {
