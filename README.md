@@ -24,8 +24,11 @@ Azure DevOps pipeline task that installs/updates the latest .NET Core runtime an
 
 | Name | Description |
 |-|-|
-| Version | Version of .NET Core to install. |
-| No Restart | If true, the `/norestart` argument will be passed to the installer to suppress any attempts to restart. |
+| `version`<br />Version | Version of .NET Core to download and install.<br />Options: `2.1`, `2.2`, `3.0` |
+| `useProxy`<br />Use a proxy server | Enabling this option will make it possible to specify a proxy server address that will be used to download the installer. |
+| `proxyServerAddress`<br />Proxy server address | The URL of the proxy server to use when downloading the installer. Needs to include the port number.<br />Example: `http://proxy.example.com:80` |
+| `norestart`<br />No Restart | Enabling this option will pass the `/norestart` argument to the installer to suppress any attempts to restart. |
+| `iisReset`<br />Perform IIS reset | Enabling this option will reset IIS after installation.<br />The reset is recommended for all changes to take effect. |
 
 ## How to use
 
