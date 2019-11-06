@@ -54,6 +54,10 @@ The task wraps a PowerShell script that:
 
 That task does not use PowerShell remoting so it will download and install .NET Core on the server where the task is run.
 
+### Does it uninstall older versions of .NET Core?
+
+No. It does not.
+
 ### What to do when I get an error downloading the installer?
 
 In some cases you might get an error like the one below because the task is unable to download the installer. 
