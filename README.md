@@ -22,8 +22,6 @@ Azure DevOps pipeline task that downloads and installs/updates the latest .NET C
 
 ## Arguments
 
-Test to see if font changes in table in Marketplace overview if I type text here.
-
 | Name | Description |
 |-|-|
 | `version`<br />Version | Version of .NET Core to download and install.<br />Options: `2.1`, `2.2`, `3.0` |
