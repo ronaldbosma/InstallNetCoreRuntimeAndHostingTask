@@ -19,7 +19,7 @@
             "label": "Version",
             "defaultValue": "3.0",
             "required": true,
-            "helpMarkDown": "Version of .NET Core to install.",
+            "helpMarkDown": "Version of .NET Core to download and install.",
             "options": {
               "2.1": "2.1",
               "2.2": "2.2",
@@ -32,7 +32,7 @@
             "label": "No restart",
             "defaultValue": false,
             "required": true,
-            "helpMarkDown": "If true, the `/norestart` argument will be passed to the installer to suppress any attempts to restart."
+            "helpMarkDown": "Enabling this option will pass the `/norestart` argument to the installer to suppress any attempts to restart."
         },
         {
             "name": "useProxy",
@@ -40,7 +40,7 @@
             "label": "Use a proxy server",
             "defaultValue": false,
             "required": true,
-            "helpMarkDown": "Enable if a proxy server must be used to download the installer."
+            "helpMarkDown": "Enabling this option will make it possible to specify a proxy server address that will be used to download the installer."
         },
         {
             "name": "proxyServerAddress",
@@ -48,7 +48,7 @@
             "label": "Proxy server address",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "The URL of the proxy server. For example: http://proxy.example.com:80.",
+            "helpMarkDown": "The URL of the proxy server to use when downloading the installer. Needs to include the port number. Example: http://proxy.example.com:80",
             "visibleRule": "useProxy = true"
         },
         {
@@ -57,7 +57,7 @@
             "label": "Perform IIS reset",
             "defaultValue": true,
             "required": true,
-            "helpMarkDown": "If true, IIS will be reset after installation. The reset is recommended for all changes to take effect."
+            "helpMarkDown": "Enabling this option will reset IIS after installation. The reset is recommended for all changes to take effect."
         }
     ],
     "execution": {
