@@ -21,7 +21,7 @@ Azure DevOps pipeline task that downloads and installs/updates the latest .NET C
 ```
 
 ## Arguments
-
+  
 | Name | Description |
 |-|-|
 | `version`<br />Version | Version of .NET Core to download and install.<br />Options: `2.1`, `2.2`, `3.0` |
@@ -38,12 +38,34 @@ Azure DevOps pipeline task that downloads and installs/updates the latest .NET C
 4. Add the `Install .NET Core Runtime & Hosting Bundle` task to the deployment group job.
 5. Configure the version you want to install.
 
-## How it works
+## Q & A
 
-This task wraps a PowerShell script that:
-1. retrieves the latest available .NET Core version from the appropriate `releases.json`, like https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/3.0/releases.json
-2. looks in the `releases.json` for the download URL of the .NET Core Runtime & Hosting bundle installer (`dotnet-hosting-win.exe`)
-3. downloads the installer
-4. executes the installer
-5. uploads any logs created by the installer
+### How does it work?
 
+The task wraps a PowerShell script that:
+1. Retrieves the latest available .NET Core version from the appropriate `releases.json`, like https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/3.0/releases.json.
+2. Looks in the `releases.json` for the download URL of the .NET Core Runtime & Hosting bundle installer (`dotnet-hosting-win.exe`).
+3. Downloads the installer.
+4. Executes the installer.
+5. Uploads any logs created by the installer.
+6. Performs an IIS reset if specified.
+
+That task does not use PowerShell remoting so it will download and install .NET Core on the server where the task is run.
+
+### What to do when I get an error downloading the installer?
+
+In some cases you might get an error like the one below because the task is unable to download the installer. 
+
+```
+Load release data from: https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/3.0/releases.json
+Exception calling "DownloadString" with "1" argument(s): "The underlying connection was closed: An unexpected error occurred on a receive."
+At C:\azagent\A1\_work\_temp\39753a3f-3f3e-4351-b612-3d286ccd9f29.ps1:20 char:5
++     $releases = $webClient.DownloadString($releasesJSONURL) | Convert ...
+```
+
+There are several reasons that might cause an error like this to occur:
+- The site `https://dotnetcli.blob.core.windows.net`, with the releases.json that has the download URL for the installer, is not a trusted site.
+- The site `https://download.visualstudio.microsoft.com/`, where the installer is hosted, is not a trusted site.
+- The server does not have outgoing internet access.
+
+Depending on the reason adding a site to the trusted sites might do the trick.
