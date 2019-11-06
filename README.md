@@ -69,3 +69,7 @@ There are several reasons that might cause an error like this to occur:
 - The server does not have outgoing internet access.
 
 Depending on the reason adding a site to the trusted sites might do the trick.
+
+## Open source
+
+This task is open source [on GitHub](https://github.com/ronaldbosma/InstallNetCoreRuntimeAndHostingTask). Feedback and contributions are welcome.
