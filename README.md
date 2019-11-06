@@ -1,6 +1,6 @@
 # Install .NET Core Runtime & Hosting Task
 
-Azure DevOps pipeline task that downloads and installs/updates the latest .NET Core runtime and hosting bundle.
+Azure DevOps pipeline task that downloads and installs the latest .NET Core runtime and hosting bundle.
 
 ## Supported .NET Core versions
 - 2.1
@@ -10,7 +10,7 @@ Azure DevOps pipeline task that downloads and installs/updates the latest .NET C
 ## YAML snippet
 ```yaml
 # Install .NET Core Runtime & Hosting Bundle
-# Install/update the .NET Core runtime and hosting bundle
+# Install the .NET Core runtime and hosting bundle
 - task: InstallNetCoreRuntimeAndHosting@0
   inputs:
     #version: '3.0' # Options: 2.1, 2.2, 3.0

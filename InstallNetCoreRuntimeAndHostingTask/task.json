@@ -2,7 +2,7 @@
     "id": "232044c0-f2b9-4a68-895c-84c988472d6e",
     "name": "InstallNetCoreRuntimeAndHosting",
     "friendlyName": "Install .NET Core Runtime & Hosting Bundle",
-    "description": "Downloads and installs/updates the .NET Core runtime and hosting bundle.",
+    "description": "Downloads and installs the latest .NET Core runtime and hosting bundle.",
     "helpMarkDown": "https://github.com/ronaldbosma/InstallNetCoreRuntimeAndHostingTask/blob/master/README.md",
     "category": "Azure Pipelines",
     "author": "Ronald Bosma",
