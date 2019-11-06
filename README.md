@@ -30,13 +30,15 @@ Azure DevOps pipeline task that downloads and installs/updates the latest .NET C
 | `norestart`<br />No Restart | Enabling this option will pass the `/norestart` argument to the installer to suppress any attempts to restart. |
 | `iisReset`<br />Perform IIS reset | Enabling this option will reset IIS after installation.<br />The reset is recommended for all changes to take effect. |
 
-## How to use
+## Examples
 
 1. Install the [Install .NET Core Runtime & Hosting Bundle](https://marketplace.visualstudio.com/items?itemName=rbosma.InstallNetCoreRuntimeAndHosting) extension from the Marketplace in your Azure DevOps organization.
 2. Create a new release pipeline.
 3. Add a deployment group job.
 4. Add the `Install .NET Core Runtime & Hosting Bundle` task to the deployment group job.
-5. Configure the version you want to install.
+5. Configure the version you want to install.  
+   
+   ![Release Pipeline Example](release-pipeline-example.png)
 
 ## Q & A
 
