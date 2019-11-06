@@ -16,7 +16,7 @@ Azure DevOps pipeline task that downloads and installs/updates the latest .NET C
     #version: '3.0' # Options: 2.1, 2.2, 3.0
     #norestart: false
     #useProxy: false
-    #proxyServerAddress: # Required when useProyx == true
+    #proxyServerAddress: # Required when useProxy == true
     #iisReset: true
 ```
 
