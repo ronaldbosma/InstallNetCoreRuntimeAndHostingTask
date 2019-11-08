@@ -58,6 +58,10 @@ The task does not use PowerShell remoting so it will download and install .NET C
 
 No.
 
+### What OS is supported?
+
+The .NET Core runtime and hosting bundle is only available for Windows.
+
 ### What to do when I get an error downloading the installer?
 
 In some cases you might get an error like the one below because the task is unable to download the installer. 
