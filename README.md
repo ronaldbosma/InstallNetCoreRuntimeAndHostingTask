@@ -11,7 +11,7 @@ Azure DevOps pipeline task that downloads and installs the latest .NET Core runt
 ```yaml
 # Install .NET Core Runtime & Hosting Bundle
 # Install the .NET Core runtime and hosting bundle
-- task: InstallNetCoreRuntimeAndHosting@0
+- task: InstallNetCoreRuntimeAndHosting@1
   inputs:
     #version: '3.0' # Options: 2.1, 2.2, 3.0
     #useProxy: false
