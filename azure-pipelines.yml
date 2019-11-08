@@ -1,11 +1,10 @@
 # Using tasks from the 'Azure DevOps Extension Tasks' extension:
 # https://marketplace.visualstudio.com/items?itemName=ms-devlabs.vsts-developer-tools-build-tasks
 
+name: 0.0.$(Rev:r)
+
 trigger:
 - master
-
-variables:
-  extensionVersion: '0.16'
 
 stages:
 
@@ -41,6 +40,9 @@ stages:
       inputs:
         rootFolder: '$(System.DefaultWorkingDirectory)'
         outputPath: '$(Build.ArtifactStagingDirectory)/extension'
+        extensionVersion: '$(Build.BuildNumber)'
+        updateTasksVersion: true
+        updateTasksVersionType: 'major'
 
     - publish: '$(Build.ArtifactStagingDirectory)/extension'
       artifact: 'extension'
@@ -72,8 +74,5 @@ stages:
         connectedServiceName: 'Visual Studio Marketplace'
         fileType: 'vsix'
         vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
-        extensionVersion: '$(extensionVersion).$(Build.BuildId)'
-        updateTasksVersion: true
-        updateTasksVersionType: 'major'
         extensionVisibility: 'private_preview'
         shareWith: '$(share-with-organization)'
