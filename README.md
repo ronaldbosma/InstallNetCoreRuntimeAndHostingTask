@@ -56,7 +56,7 @@ The task does not use PowerShell remoting so it will download and install .NET C
 
 ### Does it uninstall older versions of .NET Core?
 
-No. It does not.
+No.
 
 ### What to do when I get an error downloading the installer?
 
