@@ -77,3 +77,31 @@ stages:
         extensionVersion: '$(Build.BuildNumber)'
         extensionVisibility: 'private_preview'
         shareWith: '$(share-with-organization)'
+
+
+        
+- stage: 'PublishPublicVersion'
+  displayName: 'Publish Release Version Of Extension'
+  dependsOn: 'PublishPrivateVersion'
+  condition: succeeded()
+  jobs:
+  - deployment:
+    pool:
+      vmImage: 'ubuntu-latest'
+    environment: 'visual-studio-marketplace'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: TfxInstaller@2
+            inputs:
+              checkLatest: true
+    
+          - task: PublishAzureDevOpsExtension@2
+            inputs:
+              connectTo: 'VsTeam'
+              connectedServiceName: 'Visual Studio Marketplace'
+              fileType: 'vsix'
+              vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
+              extensionVersion: '$(Build.BuildNumber)'
+              extensionVisibility: 'public'
