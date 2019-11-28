@@ -6,6 +6,7 @@ Azure DevOps pipeline task that downloads and installs the latest .NET Core runt
 - 2.1
 - 2.2
 - 3.0
+- 3.1
 
 ## YAML snippet
 ```yaml
