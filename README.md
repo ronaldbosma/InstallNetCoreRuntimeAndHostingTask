@@ -13,7 +13,7 @@ Azure DevOps pipeline task that downloads and installs the latest .NET Core runt
 # Install the .NET Core runtime and hosting bundle
 - task: InstallNetCoreRuntimeAndHosting@1
   inputs:
-    #version: '3.0' # Options: 2.1, 2.2, 3.0
+    #version: '3.0' # Options: 2.1, 2.2, 3.0, 3.1
     #useProxy: false
     #proxyServerAddress: # Required when useProxy == true
     #norestart: false
@@ -24,7 +24,7 @@ Azure DevOps pipeline task that downloads and installs the latest .NET Core runt
 
 | Name | Description |
 |-|-|
-| `version`<br />Version | Version of .NET Core to download and install.<br />Options: `2.1`, `2.2`, `3.0` |
+| `version`<br />Version | Version of .NET Core to download and install.<br />Options: `2.1`, `2.2`, `3.0`, `3.1` |
 | `useProxy`<br />Use a proxy server | Enabling this option will make it possible to specify a proxy server address that will be used to download the installer. |
 | `proxyServerAddress`<br />Proxy server address | The URL of the proxy server to use when downloading the installer. Needs to include the port number.<br />Example: `http://proxy.example.com:80` |
 | `norestart`<br />No Restart | Enabling this option will pass the `/norestart` argument to the installer to suppress any attempts to restart. |
