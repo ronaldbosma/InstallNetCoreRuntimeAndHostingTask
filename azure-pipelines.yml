@@ -79,7 +79,8 @@ stages:
         shareWith: '$(share-with-organization)'
 
 
-        
+
+# The environment that's used in this stage has an approval so it will only execute when desired.
 - stage: 'PublishPublicVersion'
   displayName: 'Publish Release Version Of Extension'
   dependsOn: 'PublishPrivateVersion'
