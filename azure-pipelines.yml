@@ -52,7 +52,7 @@ stages:
 - stage: 'PublishPrivateVersion'
   displayName: 'Publish Private Version Of Extension'
   dependsOn: 'PackageExtension'
-  condition: false
+  condition: succeeded()
   jobs:
   - job:
     pool:
@@ -83,7 +83,7 @@ stages:
 # The environment that's used in this stage has an approval so it will only execute when desired.
 - stage: 'PublishPublicVersion'
   displayName: 'Publish Release Version Of Extension'
-  dependsOn: 'PackageExtension'
+  dependsOn: 'PublishPrivateVersion'
   condition: succeeded()
   jobs:
   - deployment:
