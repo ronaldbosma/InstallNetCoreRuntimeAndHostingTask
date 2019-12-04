@@ -106,5 +106,5 @@ stages:
               connectedServiceName: 'Visual Studio Marketplace'
               fileType: 'vsix'
               vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
-              extensionVersion: '$(ExtensionVersion)'
+              extensionVersion: '$(ExtensionVersion).0'
               extensionVisibility: 'public'
