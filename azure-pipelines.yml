@@ -66,7 +66,7 @@ stages:
         extensionVersion: '$(Build.BuildNumber)'
         extensionVisibility: 'private_preview'
         extensionTag: '-preview'
-        updateTasksVersion: true
+        updateTasksId: true
         shareWith: '$(share-with-organization)'
 
 
