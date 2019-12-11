@@ -18,6 +18,9 @@ stages:
       clean: all
 
     steps:
+    - powershell: 'scripts/save-vststasksdk-module.ps1'
+      enabled: true
+
     - powershell: |
           New-Item "./InstallNetCoreRuntimeAndHostingTask/ps_modules" -ItemType Directory
           $moduleVersion = (Find-Module VstsTaskSdk).Version.ToString()
@@ -30,6 +33,7 @@ stages:
             Move-Item "$versionPath/*" "./InstallNetCoreRuntimeAndHostingTask/ps_modules/VstsTaskSdk"
           }
       displayName: 'Download Required Powershell Modules'
+      enabled: false
 
     - task: TfxInstaller@2
       inputs:
