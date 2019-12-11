@@ -18,6 +18,7 @@ stages:
       clean: all
 
     steps:
+    # Extension contains tasks that depend on the VstsTaskSdk PowerShell module so we need to include this in the extension
     - powershell: 'scripts/save-vststasksdk-module.ps1'
       displayName: 'Download Required Powershell Modules'
 
@@ -65,8 +66,10 @@ stages:
         vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
         extensionVersion: '$(Build.BuildNumber)'
         extensionVisibility: 'private_preview'
+        # This tag allows us to install both the private and public version of this extension in a single Azure DevOps organization side-by-side.
         extensionTag: '-preview'
-        updateTasksId: true   # Set to true so I can install both the private and public version in a single Azure DevOps organization
+        # Generate unique id for task that differs from the public version of the task.
+        updateTasksId: true
         shareWith: '$(share-with-organization)'
 
 
