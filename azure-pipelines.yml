@@ -74,8 +74,8 @@ stages:
         connectedServiceName: 'Visual Studio Marketplace'
         fileType: 'vsix'
         vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
-        extensionTag: '-preview'
         extensionVisibility: 'private_preview'
+        extensionTag: '-preview'
         updateTasksVersion: true
         shareWith: '$(share-with-organization)'
 
