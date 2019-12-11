@@ -48,7 +48,7 @@ stages:
       vmImage: 'ubuntu-latest'
 
     steps:
-    - checkout: none
+    - checkout: none    # No need to checkout code. We're only using an artifact in this stage.
     
     - task: TfxInstaller@2
       inputs:
@@ -81,7 +81,7 @@ stages:
       vmImage: 'ubuntu-latest'
 
     steps:
-    - checkout: none
+    - checkout: none    # No need to checkout code. We're only using an artifact in this stage.
     
     - task: TfxInstaller@2
       inputs:
