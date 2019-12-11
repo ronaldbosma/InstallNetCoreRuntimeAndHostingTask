@@ -85,7 +85,7 @@ stages:
 - stage: 'PublishPublicVersion'
   displayName: 'Publish Release Version Of Extension'
   dependsOn: 'PublishPrivateVersion'
-  condition: succeeded()
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   jobs:
   - deployment:
     pool:
