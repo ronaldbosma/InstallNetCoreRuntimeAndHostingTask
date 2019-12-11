@@ -80,28 +80,29 @@ stages:
 
 
 
-# The environment that's used in this stage has an approval so it will only execute when desired.
 - stage: 'PublishPublicVersion'
   displayName: 'Publish Release Version Of Extension'
   dependsOn: 'PublishPrivateVersion'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   jobs:
-  - deployment:
+  - job:
     pool:
       vmImage: 'ubuntu-latest'
-    environment: 'visual-studio-marketplace'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: TfxInstaller@2
-            inputs:
-              checkLatest: true
+
+    steps:
+    - checkout: none
     
-          - task: PublishAzureDevOpsExtension@2
-            inputs:
-              connectTo: 'VsTeam'
-              connectedServiceName: 'Visual Studio Marketplace'
-              fileType: 'vsix'
-              vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
-              extensionVisibility: 'public'
+    - task: TfxInstaller@2
+      inputs:
+        checkLatest: true
+
+    - download: current
+      artifact: 'extension'
+    
+    - task: PublishAzureDevOpsExtension@2
+      inputs:
+        connectTo: 'VsTeam'
+        connectedServiceName: 'Visual Studio Marketplace'
+        fileType: 'vsix'
+        vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
+        extensionVisibility: 'public'
