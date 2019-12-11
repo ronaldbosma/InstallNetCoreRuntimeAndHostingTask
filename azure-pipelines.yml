@@ -66,7 +66,7 @@ stages:
         extensionVersion: '$(Build.BuildNumber)'
         extensionVisibility: 'private_preview'
         extensionTag: '-preview'
-        updateTasksId: true
+        updateTasksId: true   # Set to true so I can install both the private and public version in a single Azure DevOps organization
         shareWith: '$(share-with-organization)'
 
 
