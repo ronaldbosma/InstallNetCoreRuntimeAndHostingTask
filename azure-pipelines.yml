@@ -75,6 +75,7 @@ stages:
         fileType: 'vsix'
         vsixFile: '$(Pipeline.Workspace)/extension/*.vsix'
         extensionVersion: '$(Build.BuildNumber)'
+        extensionTag: '-preview'
         extensionVisibility: 'private_preview'
         shareWith: '$(share-with-organization)'
 
