@@ -63,8 +63,10 @@ function Install-DotNetCore([string]$installerFilePath, [bool]$norestart, [bool]
     # Create log folder
     $logFolder = Join-Path $installerFolder "logs"
     $logFilePath = Join-Path $logFolder "$fileName.log"
+    if (Test-Path $logFolder) {
+        Remove-item -Path $logFolder -Recurse -Force
+    }
     New-Item -Path $logFolder -ItemType Directory | Out-Null
-
 
     # Execute installer
     $installationArguments = "/passive /log $logFilePath"
