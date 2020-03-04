@@ -4,6 +4,8 @@ stages:
 - stage: 'InstallNetCore'
   jobs:
   - deployment: 'InstallNetCore'
+    pool:
+      vmImage: 'windows-latest'
     environment:
       name: 'net-core-test'
       resourceType: 'virtualMachine'
