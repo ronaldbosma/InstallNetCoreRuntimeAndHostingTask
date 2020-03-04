@@ -4,8 +4,6 @@ stages:
 - stage: 'InstallNetCore'
   jobs:
   - deployment: 'InstallNetCore'
-    pool:
-      vmImage: 'windows-latest'
     environment:
       name: 'net-core-test'
       resourceType: 'VirtualMachine'
@@ -14,9 +12,10 @@ stages:
       runOnce:
         deploy:
           steps:
-          - task: InstallNetCoreRuntimeAndHosting@1
-            inputs:
-              version: '3.1'
-              useProxy: false
-              norestart: false
-              iisReset: true
+          - script: echo foo
+          #- task: InstallNetCoreRuntimeAndHosting@1
+          #  inputs:
+          #    version: '3.1'
+          #    useProxy: false
+          #    norestart: false
+          #    iisReset: true
