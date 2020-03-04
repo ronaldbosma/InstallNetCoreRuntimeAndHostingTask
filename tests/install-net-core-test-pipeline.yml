@@ -9,12 +9,12 @@ stages:
       resourceType: 'virtualMachine'
       tags: 'net-core'
     strategy:
-    runOnce:
-      deploy:
-        steps:
-        - task: InstallNetCoreRuntimeAndHosting@1
-          inputs:
-          version: '3.1'
-          useProxy: false
-          norestart: false
-          iisReset: true
+      runOnce:
+        deploy:
+          steps:
+          - task: InstallNetCoreRuntimeAndHosting@1
+            inputs:
+            version: '3.1'
+            useProxy: false
+            norestart: false
+            iisReset: true
