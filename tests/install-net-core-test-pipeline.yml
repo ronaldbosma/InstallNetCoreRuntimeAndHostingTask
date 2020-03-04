@@ -12,10 +12,9 @@ stages:
       runOnce:
         deploy:
           steps:
-          - script: echo foo
-          #- task: InstallNetCoreRuntimeAndHosting@1
-          #  inputs:
-          #    version: '3.1'
-          #    useProxy: false
-          #    norestart: false
-          #    iisReset: true
+          - task: InstallNetCoreRuntimeAndHosting@0
+            inputs:
+              version: '3.1'
+              useProxy: false
+              norestart: false
+              iisReset: true
