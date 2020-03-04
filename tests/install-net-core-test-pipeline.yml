@@ -8,7 +8,7 @@ stages:
       vmImage: 'windows-latest'
     environment:
       name: 'net-core-test'
-      resourceType: 'virtualMachine'
+      resourceType: 'VirtualMachine'
       tags: 'net-core'
     strategy:
       runOnce:
