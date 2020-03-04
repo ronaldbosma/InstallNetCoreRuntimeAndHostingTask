@@ -1,0 +1,20 @@
+trigger: none
+
+stages:
+- stage: 'InstallNetCore'
+  jobs:
+  - deployment: 'InstallNetCore'
+    environment:
+      name: 'net-core-test'
+      resourceType: 'virtualMachine'
+      tags: 'net-core'
+    strategy:
+    runOnce:
+      deploy:
+        steps:
+        - task: InstallNetCoreRuntimeAndHosting@1
+          inputs:
+          version: '3.1'
+          useProxy: false
+          norestart: false
+          iisReset: true
