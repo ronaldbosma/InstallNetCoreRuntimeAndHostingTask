@@ -1,7 +1,7 @@
 # Using tasks from the 'Azure DevOps Extension Tasks' extension:
 # https://marketplace.visualstudio.com/items?itemName=ms-devlabs.vsts-developer-tools-build-tasks
 
-name: 0.0.$(Rev:r)
+name: 1.0.$(Rev:r)
 
 trigger:
 - master
