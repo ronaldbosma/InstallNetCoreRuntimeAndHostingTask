@@ -33,6 +33,37 @@ Azure DevOps pipeline task that downloads and installs the latest .NET Core runt
 
 ## Examples
 
+### YAML pipeline
+
+1. Install the [Install .NET Core Runtime & Hosting Bundle](https://marketplace.visualstudio.com/items?itemName=rbosma.InstallNetCoreRuntimeAndHosting) extension from the Marketplace in your Azure DevOps organization.
+2. Create a new Environment with the name 'net-core-test'. Select 'Virtual machines' as the resource type.
+3. Register a machine in the new environment and give it the tag 'net-core'.
+4. Create a new YAML pipeline with the following content.
+```yaml
+trigger: none
+
+stages:
+- stage: 'InstallNetCore'
+  jobs:
+  - deployment: 'InstallNetCore'
+    environment:
+      name: 'net-core-test'
+      resourceType: 'VirtualMachine'
+      tags: 'net-core'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: InstallNetCoreRuntimeAndHosting@1
+            inputs:
+              version: '3.1'
+              useProxy: false
+              norestart: false
+              iisReset: true
+```
+
+### Release pipeline with a Deployment group job
+
 1. Install the [Install .NET Core Runtime & Hosting Bundle](https://marketplace.visualstudio.com/items?itemName=rbosma.InstallNetCoreRuntimeAndHosting) extension from the Marketplace in your Azure DevOps organization.
 2. Create a new release pipeline.
 3. Add a deployment group job.
