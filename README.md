@@ -36,9 +36,9 @@ Azure DevOps pipeline task that downloads and installs the latest .NET Core runt
 ### YAML pipeline
 
 1. Install the [Install .NET Core Runtime & Hosting Bundle](https://marketplace.visualstudio.com/items?itemName=rbosma.InstallNetCoreRuntimeAndHosting) extension from the Marketplace in your Azure DevOps organization.
-2. Create a new Environment with the name 'net-core-test'. Select 'Virtual machines' as the resource type.
-3. Register a machine in the new environment and give it the tag 'net-core'.
-4. Create a new YAML pipeline with the following content.
+2. Create a new [Environment](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/environments?view=azure-devops) with the name 'net-core-test'. Select 'Virtual machines' as the resource type.
+3. [Register a machine in the new Environment](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/environments-virtual-machines?view=azure-devops) and give it the tag 'net-core'.
+4. [Create a new YAML pipeline](https://docs.microsoft.com/en-us/azure/devops/pipelines/get-started-yaml?view=azure-devops) with the following content.
 ```yaml
 trigger: none
 
@@ -61,16 +61,21 @@ stages:
               norestart: false
               iisReset: true
 ```
+5. Save and run the pipeline.
 
 ### Release pipeline with a Deployment group job
 
 1. Install the [Install .NET Core Runtime & Hosting Bundle](https://marketplace.visualstudio.com/items?itemName=rbosma.InstallNetCoreRuntimeAndHosting) extension from the Marketplace in your Azure DevOps organization.
-2. Create a new release pipeline.
-3. Add a deployment group job.
-4. Add the `Install .NET Core Runtime & Hosting Bundle` task to the deployment group job.
-5. Configure the version you want to install.  
+2. Create a [Deployment group](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/deployment-groups/?view=azure-devops).
+3. [Register a machine in the new Deployment group](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/deployment-groups/howto-provision-deployment-group-agents?view=azure-devops).
+4. Create a new [Release pipeline](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/?view=azure-devops).
+5. Add a Deployment group job for the new Deployment group.
+6. Add the `Install .NET Core Runtime & Hosting Bundle` task to the Deployment group job.
+7. Configure the version you want to install.  
    
    ![Release Pipeline Example](release-pipeline-example.png)
+
+8. Save and run the pipeline.
 
 ## Q & A
 
