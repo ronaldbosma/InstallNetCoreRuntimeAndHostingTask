@@ -14,7 +14,7 @@ stages:
           steps:
           - task: InstallNetCoreRuntimeAndHosting@0
             inputs:
-              version: '3.1'
+              version: '5.0'
               useProxy: false
               norestart: false
               iisReset: true
