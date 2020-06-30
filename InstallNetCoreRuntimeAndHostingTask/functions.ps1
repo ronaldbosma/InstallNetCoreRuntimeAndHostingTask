@@ -1,8 +1,32 @@
-function Get-DotNetCoreInstaller([string]$dotNetVersion, [bool]$useProxy, [string]$proxyServerAddress, [string]$outputFilePath)
+function Test-DotNetCoreRuntimeIsInstalled([string]$dotNetRuntimeVersion)
 {
-    $fileName = "dotnet-hosting-win.exe"
-    $releasesJSONURL = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/" + $dotNetVersion + "/releases.json"
+    $version = & dotnet "--list-runtimes" | Where-Object { $_ -Match $dotNetRuntimeVersion }
+    $installed = $null -ne $version
 
+    if ($installed) {
+        Write-Host Runtime $dotNetRuntimeVersion is already installed
+    } else {
+        Write-Host Runtime $dotNetRuntimeVersion is not installed
+    }
+    return $installed
+}
+
+function Test-AspNetCoreModuleIsInstalled()
+{
+    $registryKeyDisplayName = "Microsoft ASP.NET Core Module V2"
+    $registryKey = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Where-Object { $_ -eq $registryKeyDisplayName }
+    $installed = $null -ne $registryKey
+
+    if ($installed) {
+        Write-Host $registryKeyDisplayName is already installed
+    } else {
+        Write-Host $registryKeyDisplayName is not installed
+    }
+    return $installed
+}
+
+function Get-WebClient([bool]$useProxy, [string]$proxyServerAddress)
+{
     $webClient = New-Object System.Net.WebClient
     if ($useProxy -eq $true) {
         if (($null -eq $proxyServerAddress) -or ($proxyServerAddress -eq "")) {
@@ -12,7 +36,13 @@ function Get-DotNetCoreInstaller([string]$dotNetVersion, [bool]$useProxy, [strin
         Write-Host Proxy server $proxyServerAddress configured
         $webClient.Proxy = new-Object System.Net.WebProxy $proxyServerAddress
     }
+    return $webClient
+}
 
+function Get-DotNetLatestRelease([string]$dotNetVersion, [bool]$useProxy, [string]$proxyServerAddress)
+{
+    $webClient = Get-WebClient $useProxy $proxyServerAddress
+    $releasesJSONURL = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/" + $dotNetVersion + "/releases.json"
 
     # Load releases.json
     Write-Host Load release data from: $releasesJSONURL
@@ -20,7 +50,6 @@ function Get-DotNetCoreInstaller([string]$dotNetVersion, [bool]$useProxy, [strin
 
     Write-Host Latest Release Version: $releases.'latest-release'
     Write-Host Latest Release Date: $releases.'latest-release-date'
-
 
     # Select the latest release
     $latestRelease = $releases.releases | Where-Object { ($_.'release-version' -eq $releases.'latest-release') -and ($_.'release-date' -eq $releases.'latest-release-date') }
@@ -30,6 +59,13 @@ function Get-DotNetCoreInstaller([string]$dotNetVersion, [bool]$useProxy, [strin
         [Environment]::Exit(1)
     }
 
+    return $latestRelease
+}
+
+function Get-DotNetCoreInstaller([System.Object]$latestRelease, [bool]$useProxy, [string]$proxyServerAddress, [string]$outputFilePath)
+{
+    $webClient = Get-WebClient $useProxy $proxyServerAddress
+    $fileName = "dotnet-hosting-win.exe"
 
     # Select the installer to download
     $file = $latestRelease.'aspnetcore-runtime'.files | Where-Object { $_.name -eq $fileName }
@@ -39,13 +75,11 @@ function Get-DotNetCoreInstaller([string]$dotNetVersion, [bool]$useProxy, [strin
         [Environment]::Exit(1)
     }
 
-
     # Create folder for installer
     $outputFolder = Split-Path $outputFilePath
     if (-not(Test-Path $outputFolder)) {
         New-Item -Path $outputFolder -ItemType Directory | Out-Null
     }
-
 
     # Download installer
     Write-Host Downloading $file.name from: $file.url

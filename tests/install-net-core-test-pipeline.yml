@@ -12,9 +12,10 @@ stages:
       runOnce:
         deploy:
           steps:
-          - task: InstallNetCoreRuntimeAndHosting@1
+          - task: InstallNetCoreRuntimeAndHosting@2
             inputs:
               version: '5.0'
               useProxy: false
               norestart: false
               iisReset: true
+              forceInstall: false

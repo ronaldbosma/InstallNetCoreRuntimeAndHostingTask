@@ -17,7 +17,7 @@
             "name": "version",
             "type": "pickList",
             "label": "Version",
-            "defaultValue": "3.0",
+            "defaultValue": "3.1",
             "required": true,
             "helpMarkDown": "Version of .NET Core to download and install.",
             "options": {
@@ -60,6 +60,14 @@
             "defaultValue": true,
             "required": true,
             "helpMarkDown": "Enabling this option will reset IIS after installation. The reset is recommended for all changes to take effect."
+        },
+        {
+            "name": "forceInstall",
+            "type": "boolean",
+            "label": "Force installation",
+            "defaultValue": false,
+            "required": true,
+            "helpMarkDown": "Enabling this option will bypass checking for existing bundle install components."
         }
     ],
     "execution": {
