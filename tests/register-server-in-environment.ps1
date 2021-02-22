@@ -2,7 +2,8 @@ param (
     [Parameter(Mandatory)][string]$OrganizationUrl,
     [Parameter(Mandatory)][string]$TeamProject,
     [Parameter(Mandatory)][string]$Environment,
-    [Parameter(Mandatory)][string]$Token
+    [Parameter(Mandatory)][string]$Token,
+    [string]$Tags
 )
 
 $ErrorActionPreference="Stop";
@@ -58,7 +59,14 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem;
 [System.IO.Compression.ZipFile]::ExtractToDirectory( $agentZip, "$PWD");
 
 # Register the agent in the environment
-.\config.cmd --unattended --environment --environmentname $Environment --agent $env:COMPUTERNAME --runasservice --work '_work' --url $OrganizationUrl --projectname $TeamProject --auth PAT --token $Token;
+if ([string]::IsNullOrWhiteSpace($Tags))
+{
+    .\config.cmd --unattended --environment --environmentname $Environment --agent $env:COMPUTERNAME --runasservice --work '_work' --url $OrganizationUrl --projectname $TeamProject --auth PAT --token $Token;
+}
+else
+{
+    .\config.cmd --unattended --environment --environmentname $Environment --agent $env:COMPUTERNAME --runasservice --work '_work' --url $OrganizationUrl --projectname $TeamProject --auth PAT --token $Token --addvirtualmachineresourcetags --virtualmachineresourcetags "$($Tags)";
+}
 
 # Remove the zip file
 Remove-Item $agentZip;
