@@ -67,6 +67,23 @@ for($i=1; $i -lt 100; $i++)
 
 $agentZip="$PWD\agent.zip";
 
+
+# Retrieve list with releases for the Azure Pipelines agent
+$releasesUrl = "https://api.github.com/repos/Microsoft/azure-pipelines-agent/releases"
+
+$webClient1 = New-Object System.Net.WebClient
+$webClient1.Headers.Add("user-agent", "azure pipeline");
+$releases = $webClient1.DownloadString($releasesUrl) | ConvertFrom-Json
+
+# Select the newest agent release
+$latestAgentRelease = $releases | Sort-Object -Property published_at -Descending | Select-Object -First 1
+$assetsUrl = $latestAgentRelease.assets[0].browser_download_url
+
+# Get the agent download url from the agent release assets
+$assets = $webClient1.DownloadString($assetsUrl) | ConvertFrom-Json
+$downloadUrl = $assets | Where-Object { $_.platform -eq "win-x64"} | Select-Object -First 1 -Property downloadUrl
+
+
 # Configure the web client used to download the zip file with the agent
 $DefaultProxy=[System.Net.WebRequest]::DefaultWebProxy;
 $securityProtocol=@();
@@ -74,13 +91,14 @@ $securityProtocol+=[Net.ServicePointManager]::SecurityProtocol;
 $securityProtocol+=[Net.SecurityProtocolType]::Tls12;
 [Net.ServicePointManager]::SecurityProtocol=$securityProtocol;
 $WebClient=New-Object Net.WebClient; 
-$Uri='https://vstsagentpackage.azureedge.net/agent/2.181.2/vsts-agent-win-x64-2.181.2.zip';
+$Uri=downloadUrl;
 if($DefaultProxy -and (-not $DefaultProxy.IsBypassed($Uri)))
 {
     $WebClient.Proxy= New-Object Net.WebProxy($DefaultProxy.GetProxy($Uri).OriginalString, $True);
 };
 
 # Download the zip file with the agent
+Write-Host "Download agent zip file from $Uri";
 $WebClient.DownloadFile($Uri, $agentZip);
 
 # Extract the zip file
