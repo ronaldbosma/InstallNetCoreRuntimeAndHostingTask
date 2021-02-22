@@ -1,3 +1,31 @@
+<#
+    .SYNOPSIS
+    Register server in Azure Piplines Environment.
+
+    .DESCRIPTION
+    Downloads and installs agent on this server and then registers the server in an Azure Pipelines Environment.
+
+    .PARAMETER OrganizationUrl
+    URL of the server. For example: https://myaccount.visualstudio.com or http://onprem:8080/tfs.
+
+    .PARAMETER TeamProject
+    Name of the team project. For example myProject.
+
+    .PARAMETER Environment
+    Name of the environment. For example myEnvironment.
+
+    .PARAMETER Token
+    Personal Access Token. The token needs the scope 'Environment (Read & manage)'.
+
+    .PARAMETER Tags
+    Optional comma separated list of tags to add to the server. For example: "web, sql".
+
+    .EXAMPLE
+    PS> .\register-server-in-environment.ps1 -OrganizationUrl https://myaccount.visualstudio.com -TeamProject myProject -Environment myEnvironment -Token myToken
+
+    .EXAMPLE
+    PS> .\register-server-in-environment.ps1 -OrganizationUrl https://myaccount.visualstudio.com -TeamProject myProject -Environment myEnvironment -Token myToken -Tags "web, sql"
+#>
 param (
     [Parameter(Mandatory)][string]$OrganizationUrl,
     [Parameter(Mandatory)][string]$TeamProject,
