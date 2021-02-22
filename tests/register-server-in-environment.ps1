@@ -4,6 +4,7 @@
 
     .DESCRIPTION
     Downloads and installs agent on this server and then registers the server in an Azure Pipelines Environment.
+    This script is based on the registration script that you can copy from the Azure DevOps portal when manually adding a Virtual machines resource to an environment.
 
     .PARAMETER OrganizationUrl
     URL of the server. For example: https://myaccount.visualstudio.com or http://onprem:8080/tfs.
