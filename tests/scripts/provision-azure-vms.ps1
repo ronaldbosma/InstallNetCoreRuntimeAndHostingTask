@@ -35,8 +35,7 @@ az vm extension set `
     --settings '{\"commandToExecute\":\"powershell.exe Install-WindowsFeature -Name Web-Server -IncludeManagementTools\"}'
 
 Write-Host "Add $vmName to environment $Environment in team project $TeamProject"
-$registerServerSettings='{\"fileUris\":[\"'+$registerServerScript+'\"], \"commandToExecute\":\"powershell.exe ./register-server-in-environment.ps1 -OrganizationUrl '+$OrganizationUrl+' -TeamProject '+$TeamProject+' -Environment '+$Environment+' -Token '+$Token+'\"}'
-#$registerServerSettings='{\"fileUris\":[\"'+$registerServerScript+'\"], \"commandToExecute\":\"powershell.exe ./register-server-in-environment.ps1 -OrganizationUrl '+$OrganizationUrl+' -TeamProject '+$TeamProject+' -Environment '+$Environment+' -Token '+$Token+' -Tags '+$Tags+'\"}'
+$registerServerSettings="{`\`"fileUris`\`":[`\`"$registerServerScript`\`"], `\`"commandToExecute`\`":`\`"powershell.exe ./register-server-in-environment.ps1 -OrganizationUrl '$OrganizationUrl' -TeamProject '$TeamProject' -Environment '$Environment' -Token '$Token' -Tags '$Tags'`\`"}"
 az vm extension set `
     --name CustomScriptExtension `
     --publisher Microsoft.Compute `
