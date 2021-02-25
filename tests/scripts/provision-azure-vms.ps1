@@ -26,7 +26,7 @@ az vm extension set `
     --publisher Microsoft.Compute `
     --vm-name $vmName `
     --resource-group $ResourceGroup `
-    --settings '{\"commandToExecute\":\"powershell.exe Install-WindowsFeature -Name Web-Server\"}'
+    --settings '{\"commandToExecute\":\"powershell.exe Install-WindowsFeature -Name Web-Server -IncludeManagementTools\"}'
 
 
 #az group delete --name $ResourceGroup --no-wait --yes
