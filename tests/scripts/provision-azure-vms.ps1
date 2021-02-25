@@ -1,6 +1,5 @@
 param (
     [Parameter(Mandatory)][string]$ResourceGroup,
-    [Parameter(Mandatory)][string]$AdminUserName,
     [Parameter(Mandatory)][string]$AdminPassword
 )
 
@@ -16,7 +15,6 @@ Write-Host "Provision virtual machine $vmName"
 az vm create `
     --name $vmName `
     --image Win2019Datacenter `
-    --admin-username $AdminUserName `
     --admin-password $AdminPassword `
     --resource-group $ResourceGroup `
     --location $location
