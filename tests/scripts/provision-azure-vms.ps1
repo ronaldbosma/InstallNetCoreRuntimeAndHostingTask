@@ -1,10 +1,16 @@
 param (
     [Parameter(Mandatory)][string]$ResourceGroup,
-    [Parameter(Mandatory)][string]$AdminPassword
+    [Parameter(Mandatory)][string]$AdminPassword,
+    [Parameter(Mandatory)][string]$OrganizationUrl,
+    [Parameter(Mandatory)][string]$TeamProject,
+    [Parameter(Mandatory)][string]$Environment,
+    [Parameter(Mandatory)][string]$Token,
+    [string]$Tags
 )
 
 $location = "westeurope"
 $vmName = "win-server-2019"
+$registerServerScript = "https://raw.githubusercontent.com/ronaldbosma/InstallNetCoreRuntimeAndHostingTask/automated-test-pipeline/tests/scripts/register-server-in-environment.ps1"
 
 $ErrorActionPreference="Stop";
 
@@ -27,6 +33,16 @@ az vm extension set `
     --vm-name $vmName `
     --resource-group $ResourceGroup `
     --settings '{\"commandToExecute\":\"powershell.exe Install-WindowsFeature -Name Web-Server -IncludeManagementTools\"}'
+
+Write-Host "Add $vmName to environment $Environment in team project $TeamProject"
+$registerServerSettings='{\"fileUris\":[\"'+$registerServerScript+'\"], \"commandToExecute\":\"powershell.exe ./register-server-in-environment.ps1 -OrganizationUrl '+$OrganizationUrl+' -TeamProject '+$TeamProject+' -Environment '+$Environment+' -Token '+$Token+'\"}'
+#$registerServerSettings='{\"fileUris\":[\"'+$registerServerScript+'\"], \"commandToExecute\":\"powershell.exe ./register-server-in-environment.ps1 -OrganizationUrl '+$OrganizationUrl+' -TeamProject '+$TeamProject+' -Environment '+$Environment+' -Token '+$Token+' -Tags '+$Tags+'\"}'
+az vm extension set `
+    --name CustomScriptExtension `
+    --publisher Microsoft.Compute `
+    --vm-name $vmName `
+    --resource-group $ResourceGroup `
+    --settings $registerServerSettings
 
 
 #az group delete --name $ResourceGroup --no-wait --yes
