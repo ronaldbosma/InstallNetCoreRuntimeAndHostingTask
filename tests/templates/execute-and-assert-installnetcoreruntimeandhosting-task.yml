@@ -1,0 +1,25 @@
+parameters:
+  dotNetVersion: ''
+
+steps:
+- task: PowerShell@2
+  displayName: 'Assert is ${{ parameters.dotNetVersion }} installed'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $version = "${{ parameters.dotNetVersion }}";
+      $installedSoftware = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*;
+      
+      $isRuntimeInstalled = ($installedSoftware | Where-Object { $_.DisplayName -match "Microsoft .NET (Core )?Runtime - $version.+" }) -ne $null
+      if ($isRuntimeInstalled) {
+        Write-Host "Microsoft .NET (Core) Runtime version $Version is installed"
+      } else {
+        Write-Error "Microsoft .NET (Core) Runtime version $version is not installed"
+      }
+
+      $isHostInstalled = ($installedSoftware | Where-Object { $_.DisplayName -match "Microsoft .NET (Core )?Host - $version.+" }) -ne $null
+      if ($isHostInstalled) {
+        Write-Host "Microsoft .NET (Core) Host version $Version is installed"
+      } else {
+        Write-Error "Microsoft .NET (Core) Host version $version is not installed"
+      }
