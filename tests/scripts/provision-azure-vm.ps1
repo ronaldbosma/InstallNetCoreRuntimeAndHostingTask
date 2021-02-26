@@ -46,8 +46,26 @@ $registerServerScript = "https://raw.githubusercontent.com/ronaldbosma/InstallNe
 
 $ErrorActionPreference="Stop";
 
+
+Write-Host "Create environment $environmentName in Azure DevOps team project $TeamProject"
+$createEnvironmentBody = @{ name = $environmentName; description = "Provisioned environment $environmentName" };
+$createEnvironmentFile = "create-environment-body.json";
+Set-Content -Path $createEnvironmentFile -Value ($createEnvironmentBody | ConvertTo-Json);
+$environment = az devops invoke `
+    --area distributedtask `
+    --resource environments `
+    --route-parameters project=$TeamProject `
+    --org $OrganizationUrl `
+    --http-method POST `
+    --in-file $createEnvironmentFile `
+    --api-version "6.0-preview";
+
+Remove-Item $createEnvironmentFile -Force;
+
+
 Write-Host "Create resource group $environmentName";
 az group create --name $environmentName --location $location;
+
 
 Write-Host "Provision virtual machine $vmName";
 az vm create `
@@ -57,6 +75,7 @@ az vm create `
     --resource-group $environmentName `
     --location $location;
 
+
 Write-Host "Install IIS on virtual machine $vmName";
 az vm extension set `
     --name CustomScriptExtension `
@@ -65,7 +84,8 @@ az vm extension set `
     --resource-group $environmentName `
     --settings '{\"commandToExecute\":\"powershell.exe Install-WindowsFeature -Name Web-Server -IncludeManagementTools\"}';
 
-Write-Host "Add $vmName to environment $environmentName in team project $TeamProject";
+
+Write-Host "Add $vmName to Azure DevOps environment $environmentName in team project $TeamProject";
 $registerServerSettings="{`\`"fileUris`\`":[`\`"$registerServerScript`\`"], `\`"commandToExecute`\`":`\`"powershell.exe ./register-server-in-environment.ps1 -OrganizationUrl '$OrganizationUrl' -TeamProject '$TeamProject' -Environment '$environmentName' -Token '$Token' -Tags '$Tags'`\`"}";
 az vm extension set `
     --name CustomScriptExtension `
