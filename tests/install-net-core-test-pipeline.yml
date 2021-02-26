@@ -83,5 +83,7 @@ stages:
         scriptType: pscore
         scriptPath: './tests/scripts/delete-azure-vms.ps1'
         arguments:
+          -OrganizationUrl '$(System.CollectionUri)' `
+          -TeamProject '$(System.TeamProject)' `
           -Environment '$(environmentName)' `
           -Token '$(Token)'

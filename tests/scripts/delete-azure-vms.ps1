@@ -17,6 +17,8 @@
     PS> .\delete-azure-vms.ps1 -Environment Environment -Token myToken
 #>
 param (
+    [Parameter(Mandatory)][string]$OrganizationUrl,
+    [Parameter(Mandatory)][string]$TeamProject,
     [Parameter(Mandatory)][string]$Environment,
     [Parameter(Mandatory)][string]$Token
 )
