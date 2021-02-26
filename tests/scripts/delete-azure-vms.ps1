@@ -20,7 +20,6 @@ param (
     [Parameter(Mandatory)][string]$Token
 )
 
-
 $unregisterServerScript = "https://raw.githubusercontent.com/ronaldbosma/InstallNetCoreRuntimeAndHostingTask/automated-test-pipeline/tests/scripts/unregister-server-from-environment.ps1";
 
 $ErrorActionPreference="Stop";
@@ -33,7 +32,6 @@ foreach ($vm in $vms)
 {
     Write-Host "Unregister $vm from environment";
     $unregisterServerSettings="{`\`"fileUris`\`":[`\`"$unregisterServerScript`\`"], `\`"commandToExecute`\`":`\`"powershell.exe ./unregister-server-from-environment.ps1 -Token '$Token'`\`"}";
-
     az vm extension set `
         --name CustomScriptExtension `
         --publisher Microsoft.Compute `
