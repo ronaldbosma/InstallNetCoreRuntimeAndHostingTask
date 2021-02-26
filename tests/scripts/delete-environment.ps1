@@ -4,6 +4,7 @@ $OrganizationUrl = "https://dev.azure.com/ronaldbosma"
 
 $environmentName = $Environment.Replace(".", "-");
 
+Write-Host "Retrieve id of environment $environmentName"
 $environmentId = az devops invoke `
     --area distributedtask `
     --resource environments `
@@ -13,7 +14,7 @@ $environmentId = az devops invoke `
     --query "value[?name=='$environmentName'].id" `
     --output tsv
 
-Write-Host "Delete environment $environmentName with id $environmentId"
+Write-Host "Delete environment $environmentName with id $environmentId from team project $TeamProject"
 az devops invoke `
     --area distributedtask `
     --resource environments `
