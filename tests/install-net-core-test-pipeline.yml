@@ -15,7 +15,7 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - task: AzureCLI@2
-      display: 'Provision Azure VM'
+      displayName: 'Provision Azure VM'
       inputs:
         azureSubscription: '$(azureSubscription)'
         scriptType: pscore
