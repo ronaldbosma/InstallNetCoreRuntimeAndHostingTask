@@ -27,10 +27,10 @@
     Optional comma separated list of tags to add to the server. For example: "web, sql".
 
     .EXAMPLE
-    PS> .\provision-azure-vms.ps1 -ResourceGroup MyResourceGroup -AdminPassword Adm!nP@ssw0rd -OrganizationUrl https://myaccount.visualstudio.com -TeamProject myProject -Environment myEnvironment -Token myToken
+    PS> .\provision-azure-vm.ps1 -ResourceGroup MyResourceGroup -AdminPassword Adm!nP@ssw0rd -OrganizationUrl https://myaccount.visualstudio.com -TeamProject myProject -Environment myEnvironment -Token myToken
 
     .EXAMPLE
-    PS> .\provision-azure-vms.ps1 -ResourceGroup MyResourceGroup -AdminPassword Adm!nP@ssw0rd -OrganizationUrl https://myaccount.visualstudio.com -TeamProject myProject -Environment myEnvironment -Token myToken -Tags "web, sql"
+    PS> .\provision-azure-vm.ps1 -ResourceGroup MyResourceGroup -AdminPassword Adm!nP@ssw0rd -OrganizationUrl https://myaccount.visualstudio.com -TeamProject myProject -Environment myEnvironment -Token myToken -Tags "web, sql"
 #>
 param (
     [Parameter(Mandatory)][string]$ResourceGroup,
