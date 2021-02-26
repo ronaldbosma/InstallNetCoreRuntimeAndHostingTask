@@ -72,7 +72,7 @@ stages:
 
 - stage: 'DeleteTestServer'
   dependsOn: 'InstallNetCore'
-  condition: false
+  condition: succeeded()
   jobs:
   - job:
     pool:
