@@ -54,30 +54,35 @@ stages:
         deploy:
           steps:
           - task: InstallNetCoreRuntimeAndHosting@1
+            displayName: 'Install 2.1'
             inputs:
               version: '2.1'
               useProxy: false
               norestart: true
               iisReset: true
           - task: InstallNetCoreRuntimeAndHosting@1
+            displayName: 'Install 2.2'
             inputs:
               version: '2.2'
               useProxy: false
               norestart: true
               iisReset: true
           - task: InstallNetCoreRuntimeAndHosting@1
+            displayName: 'Install 3.0'
             inputs:
               version: '3.0'
               useProxy: false
               norestart: true
               iisReset: true
           - task: InstallNetCoreRuntimeAndHosting@1
+            displayName: 'Install 3.1'
             inputs:
               version: '3.1'
               useProxy: false
               norestart: true
               iisReset: true
           - task: InstallNetCoreRuntimeAndHosting@1
+            displayName: 'Install 5.0'
             inputs:
               version: '5.0'
               useProxy: false
