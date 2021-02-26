@@ -15,7 +15,7 @@ trigger: none
 
 variables:
   azureSubscription: 'Azure Visual Studio Enterprise'
-  environmentName: 'net-core-test-${{ variables.Build.BuildNumber }}'
+  environmentName: 'net-core-test-provisioned'
 
 
 stages:
