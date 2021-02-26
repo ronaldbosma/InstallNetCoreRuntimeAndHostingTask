@@ -55,9 +55,33 @@ stages:
           steps:
           - task: InstallNetCoreRuntimeAndHosting@1
             inputs:
+              version: '2.1'
+              useProxy: false
+              norestart: true
+              iisReset: true
+          - task: InstallNetCoreRuntimeAndHosting@1
+            inputs:
+              version: '2.2'
+              useProxy: false
+              norestart: true
+              iisReset: true
+          - task: InstallNetCoreRuntimeAndHosting@1
+            inputs:
+              version: '3.0'
+              useProxy: false
+              norestart: true
+              iisReset: true
+          - task: InstallNetCoreRuntimeAndHosting@1
+            inputs:
+              version: '3.1'
+              useProxy: false
+              norestart: true
+              iisReset: true
+          - task: InstallNetCoreRuntimeAndHosting@1
+            inputs:
               version: '5.0'
               useProxy: false
-              norestart: false
+              norestart: true
               iisReset: true
 
 
