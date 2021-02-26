@@ -19,6 +19,7 @@ variables:
   environmentName: 'net-core-test'
 
 
+stages:
 - stage: 'ProvisionTestEnvironment'
   jobs:
   - job:
