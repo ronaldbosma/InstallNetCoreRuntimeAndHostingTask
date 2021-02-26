@@ -30,6 +30,7 @@ stages:
 
 
 - stage: 'InstallNetCore'
+  dependsOn: 'ProvisionTestEnvironment'
   condition: false
   jobs:
   - deployment: 'InstallNetCore'
