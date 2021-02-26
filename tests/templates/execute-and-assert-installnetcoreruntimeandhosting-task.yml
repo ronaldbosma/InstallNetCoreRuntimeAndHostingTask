@@ -1,7 +1,18 @@
+# Will execute the custom InstallNetCoreRuntimeAndHosting task and assert that the Runtime & Hosting bundle have been installed.
+
 parameters:
-  dotNetVersion: ''
+  dotNetVersion: '' # The .NET version to install and assert. E.g. 5.0
+
 
 steps:
+- task: InstallNetCoreRuntimeAndHosting@1
+  displayName: 'Install ${{ parameters.dotNetVersion }}'
+  inputs:
+    version: '${{ parameters.dotNetVersion }}'
+    useProxy: false
+    norestart: true
+    iisReset: true
+
 - task: PowerShell@2
   displayName: 'Assert is ${{ parameters.dotNetVersion }} installed'
   inputs:
