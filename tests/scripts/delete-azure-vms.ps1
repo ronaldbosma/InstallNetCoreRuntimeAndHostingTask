@@ -1,3 +1,20 @@
+<#
+    .SYNOPSIS
+    Unregisters servers from environment and deletes resource groups.
+
+    .DESCRIPTION
+    Will retrieve all VMs from a resource group and unregister the server from any Azure Pipelines Environment it's registered in.
+    Then it will remove the resource group and all resources it contains.
+
+    .PARAMETER ResourceGroup
+    Name of the resource group to delete. For example: MyResourceGroup.
+    
+    .PARAMETER Token
+    Personal Access Token. The token needs the scope 'Environment (Read & manage)'.
+
+    .EXAMPLE
+    PS> .\delete-azure-vms.ps1 -ResourceGroup MyResourceGroup -Token myToken
+#>
 param (
     [Parameter(Mandatory)][string]$ResourceGroup,
     [Parameter(Mandatory)][string]$Token
