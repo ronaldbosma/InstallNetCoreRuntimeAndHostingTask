@@ -40,5 +40,5 @@ foreach ($vm in $vms)
         --settings $unregisterServerSettings;
 }
 
-# Delete the resource group
+Write-Host "Delete resource group $ResourceGroup"
 az group delete --name $ResourceGroup --no-wait --yes
