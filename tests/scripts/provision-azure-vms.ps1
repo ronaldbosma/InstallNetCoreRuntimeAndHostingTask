@@ -75,6 +75,3 @@ az vm extension set `
     --vm-name $vmName `
     --resource-group $ResourceGroup `
     --settings $registerServerSettings;
-
-
-#az group delete --name $ResourceGroup --no-wait --yes;
