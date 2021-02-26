@@ -53,6 +53,8 @@ If(-NOT (Test-Path $env:SystemDrive\'azagent'))
 };
 
 
+$agentName = $env:COMPUTERNAME;
+
 cd $env:SystemDrive\'azagent';
 
 # Create a unique A* folder for the agent using i as the index
@@ -63,6 +65,9 @@ for($i=1; $i -lt 100; $i++)
     {
         mkdir $destFolder;
         cd $destFolder;
+
+        $agentName = "$agentName-$i";
+
         break;
     }
 };
@@ -118,13 +123,14 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem;
 
 
 # Register the agent in the environment
+Write-Host "Register agent $agentName in $Environment";
 if ([string]::IsNullOrWhiteSpace($Tags))
 {
-    .\config.cmd --unattended --environment --environmentname $Environment --agent $env:COMPUTERNAME --runasservice --work '_work' --url $OrganizationUrl --projectname $TeamProject --auth PAT --token $Token;
+    .\config.cmd --unattended --environment --environmentname $Environment --agent $agentName --runasservice --work '_work' --url $OrganizationUrl --projectname $TeamProject --auth PAT --token $Token;
 }
 else
 {
-    .\config.cmd --unattended --environment --environmentname $Environment --agent $env:COMPUTERNAME --runasservice --work '_work' --url $OrganizationUrl --projectname $TeamProject --auth PAT --token $Token --addvirtualmachineresourcetags --virtualmachineresourcetags "$($Tags)";
+    .\config.cmd --unattended --environment --environmentname $Environment --agent $agentName --runasservice --work '_work' --url $OrganizationUrl --projectname $TeamProject --auth PAT --token $Token --addvirtualmachineresourcetags --virtualmachineresourcetags "$($Tags)";
 }
 
 
