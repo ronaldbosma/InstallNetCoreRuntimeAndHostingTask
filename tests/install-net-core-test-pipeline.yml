@@ -19,7 +19,7 @@ stages:
       inputs:
         azureSubscription: '$(azureSubscription)'
         scriptType: pscore
-        scriptLocation: './tests/scripts/provision-azure-vm.ps1'
+        scriptPath: './tests/scripts/provision-azure-vm.ps1'
         arguments:
           -ResourceGroup '$(resourceGroup)' `
           -AdminPassword 'Adm!nP@ssw0rd' `
