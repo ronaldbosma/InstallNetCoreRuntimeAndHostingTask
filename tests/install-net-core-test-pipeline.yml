@@ -20,28 +20,6 @@ variables:
 
 
 stages:
-- stage: 'ProvisionTestEnvironment'
-  condition: false
-  jobs:
-  - job:
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - task: AzureCLI@2
-      displayName: 'Provision and register Azure VM'
-      inputs:
-        azureSubscription: '$(azureSubscription)'
-        scriptType: pscore
-        scriptPath: './tests/scripts/provision-azure-vm.ps1'
-        arguments:
-          -ResourceGroup '$(resourceGroup)' `
-          -AdminPassword '$(AdminPassword)' `
-          -OrganizationUrl '$(System.CollectionUri)' `
-          -TeamProject '$(System.TeamProject)' `
-          -Environment '$(environmentName)' `
-          -Token '$(Token)'
-
-
 - stage: 'Test'
   condition: succeeded()
   jobs:
@@ -85,6 +63,28 @@ stages:
                 if (-not $isHostInstalled) {
                     Write-Error "Microsoft .NET (Core) Host version $version is not installed"
                 }
+
+
+- stage: 'ProvisionTestEnvironment'
+  condition: false
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Provision and register Azure VM'
+      inputs:
+        azureSubscription: '$(azureSubscription)'
+        scriptType: pscore
+        scriptPath: './tests/scripts/provision-azure-vm.ps1'
+        arguments:
+          -ResourceGroup '$(resourceGroup)' `
+          -AdminPassword '$(AdminPassword)' `
+          -OrganizationUrl '$(System.CollectionUri)' `
+          -TeamProject '$(System.TeamProject)' `
+          -Environment '$(environmentName)' `
+          -Token '$(Token)'
 
 
 - stage: 'InstallNetCore'
