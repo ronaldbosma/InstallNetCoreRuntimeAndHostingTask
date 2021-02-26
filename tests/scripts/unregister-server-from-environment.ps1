@@ -45,7 +45,7 @@ foreach ($agentFolder in $agentFolders)
     & .\$agentFolder\config.cmd remove --unattended --auth PAT --token $Token;
 
     Write-Host "Remove agent folder $agentFolder";
-    Remove-Item $agentFolder -Recurse
+    Remove-Item $agentFolder -Force -Recurse
 }
 
 
