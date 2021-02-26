@@ -30,6 +30,7 @@ stages:
 
 
 - stage: 'InstallNetCore'
+  condition: false
   jobs:
   - deployment: 'InstallNetCore'
     environment:
