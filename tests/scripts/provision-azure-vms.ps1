@@ -1,3 +1,37 @@
+<#
+    .SYNOPSIS
+    Provision server and register it in Azure Pipelines Environment.
+
+    .DESCRIPTION
+    Provisions a server in Azure and then registers the server in an Azure Pipelines Environment.
+
+    .PARAMETER ResourceGroup
+    Name of the resource group in which to provision the VM. For example: MyResourceGroup.
+    
+    .PARAMETER AdminPassword
+    Password of the administrator of the VM. For example: Adm!nP@ssw0rd.
+
+    .PARAMETER OrganizationUrl
+    URL of the organization. For example: https://myaccount.visualstudio.com or http://onprem:8080/tfs.
+
+    .PARAMETER TeamProject
+    Name of the team project. For example myProject.
+
+    .PARAMETER Environment
+    Name of the environment. For example myEnvironment.
+
+    .PARAMETER Token
+    Personal Access Token. The token needs the scope 'Environment (Read & manage)'.
+
+    .PARAMETER Tags
+    Optional comma separated list of tags to add to the server. For example: "web, sql".
+
+    .EXAMPLE
+    PS> .\provision-azure-vms.ps1 -ResourceGroup MyResourceGroup -AdminPassword Adm!nP@ssw0rd -OrganizationUrl https://myaccount.visualstudio.com -TeamProject myProject -Environment myEnvironment -Token myToken
+
+    .EXAMPLE
+    PS> .\provision-azure-vms.ps1 -ResourceGroup MyResourceGroup -AdminPassword Adm!nP@ssw0rd -OrganizationUrl https://myaccount.visualstudio.com -TeamProject myProject -Environment myEnvironment -Token myToken -Tags "web, sql"
+#>
 param (
     [Parameter(Mandatory)][string]$ResourceGroup,
     [Parameter(Mandatory)][string]$AdminPassword,
