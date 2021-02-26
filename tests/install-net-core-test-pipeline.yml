@@ -42,8 +42,54 @@ stages:
           -Token '$(Token)'
 
 
-- stage: 'InstallNetCore'
+- stage: 'Test'
   condition: succeeded()
+  jobs:
+  - deployment: 'Test'
+    environment:
+      name: '$(environmentName)'
+      resourceType: 'VirtualMachine'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: PowerShell@2
+            displayName: 'Assert is 2.1 installed'
+            inputs:
+              targetType: 'inline'
+              script: |
+                $version = "2.1";
+                $installedSoftware = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*;
+                $isRuntimeInstalled = ($installedSoftware | Where-Object { $_.DisplayName -match "Microsoft .NET (Core )?Runtime - $version.+" }) -ne $null
+                if (-not $isRuntimeInstalled) {
+                    Write-Error "Microsoft .NET (Core) Runtime version $version is not installed"
+                }
+
+                $isHostInstalled = ($installedSoftware | Where-Object { $_.DisplayName -match "Microsoft .NET (Core )?Host - $version.+" }) -ne $null
+                if (-not $isHostInstalled) {
+                    Write-Error "Microsoft .NET (Core) Host version $version is not installed"
+                }
+          - task: PowerShell@2
+            displayName: 'Assert is 5.1 installed'
+            inputs:
+              targetType: 'inline'
+              script: |
+                $version = "5.1";
+                $installedSoftware = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*;
+                $isRuntimeInstalled = ($installedSoftware | Where-Object { $_.DisplayName -match "Microsoft .NET (Core )?Runtime - $version.+" }) -ne $null
+                if (-not $isRuntimeInstalled) {
+                    Write-Error "Microsoft .NET (Core) Runtime version $version is not installed"
+                }
+
+                $isHostInstalled = ($installedSoftware | Where-Object { $_.DisplayName -match "Microsoft .NET (Core )?Host - $version.+" }) -ne $null
+                if (-not $isHostInstalled) {
+                    Write-Error "Microsoft .NET (Core) Host version $version is not installed"
+                }
+
+
+- stage: 'InstallNetCore'
+  dependsOn: 'ProvisionTestEnvironment'
+  condition: false
   jobs:
   - deployment: 'InstallNetCore'
     environment:
