@@ -9,7 +9,7 @@ param (
 )
 
 $location = "westeurope";
-$vmName = "win-server-2019";
+$vmName = "vm-$(Get-Date -UFormat %s)";
 $registerServerScript = "https://raw.githubusercontent.com/ronaldbosma/InstallNetCoreRuntimeAndHostingTask/automated-test-pipeline/tests/scripts/register-server-in-environment.ps1";
 
 $ErrorActionPreference="Stop";
