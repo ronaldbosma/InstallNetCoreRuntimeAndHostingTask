@@ -1,14 +1,14 @@
 <#
     .SYNOPSIS
-    Removes server from Azure Pipelines Environment.
+    Removes server from Azure Pipelines environment.
 
     .DESCRIPTION
     Loops over all agent folders and
-    - removes the agent from the Azure Pipelines Environment
+    - removes the agent from the Azure Pipelines environment
     - remove the agent folder
     
     .PARAMETER Token
-    Personal Access Token. The token needs the scope 'Environment (Read & manage)'.
+    Personal Access Token. The token needs the scope 'Environment (Read & manage)' in Azure DevOps.
 
     .EXAMPLE
     PS> .\unregister-server-from-environment.ps1 -Token myToken

@@ -1,9 +1,9 @@
 <#
     .SYNOPSIS
-    Provision server and register it in Azure Pipelines Environment.
+    Provision server and register it in Azure Pipelines environment.
 
     .DESCRIPTION
-    Provisions a server in Azure and then registers the server in an Azure Pipelines Environment.
+    Provisions a server in Azure and then registers the server in an Azure Pipelines environment.
 
     .PARAMETER ResourceGroup
     Name of the resource group in which to provision the VM. For example: MyResourceGroup.
@@ -21,7 +21,7 @@
     Name of the environment. For example myEnvironment.
 
     .PARAMETER Token
-    Personal Access Token. The token needs the scope 'Environment (Read & manage)'.
+    Personal Access Token. The token needs the scope 'Environment (Read & manage)' in Azure DevOps.
 
     .PARAMETER Tags
     Optional comma separated list of tags to add to the server. For example: "web, sql".
