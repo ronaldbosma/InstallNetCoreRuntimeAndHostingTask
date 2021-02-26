@@ -3,7 +3,7 @@ trigger: none
 
 variables:
   azureSubscription: 'Azure Visual Studio Enterprise'
-  resourceGroup: 'net-core-test-group'
+  resourceGroup: 'net-core-test-$(Build.BuildNumber)'
   environmentName: 'net-core-test'
 
 
