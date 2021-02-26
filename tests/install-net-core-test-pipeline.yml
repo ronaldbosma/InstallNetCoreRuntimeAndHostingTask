@@ -19,31 +19,7 @@ variables:
   environmentName: 'net-core-test'
 
 
-stages:
-- stage: 'Test'
-  condition: succeeded()
-  jobs:
-  - deployment: 'Test'
-    environment:
-      name: '$(environmentName)'
-      resourceType: 'VirtualMachine'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - template: 'templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
-            parameters:
-              dotNetVersion: '2.1'
-          - template: 'templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
-            parameters:
-              dotNetVersion: '5.1'
-          - template: 'templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
-            parameters:
-              dotNetVersion: '5.0'
-
-
 - stage: 'ProvisionTestEnvironment'
-  condition: false
   jobs:
   - job:
     pool:
@@ -66,7 +42,7 @@ stages:
 
 - stage: 'InstallNetCore'
   dependsOn: 'ProvisionTestEnvironment'
-  condition: false
+  condition: succeeded()
   jobs:
   - deployment: 'InstallNetCore'
     environment:
