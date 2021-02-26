@@ -27,7 +27,7 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - task: AzureCLI@2
-      displayName: 'Provision Azure VM'
+      displayName: 'Provision and register Azure VM'
       inputs:
         azureSubscription: '$(azureSubscription)'
         scriptType: pscore
@@ -59,3 +59,23 @@ stages:
               useProxy: false
               norestart: false
               iisReset: true
+
+
+stages:
+- stage: 'DeleteTestServer'
+  dependsOn: 'InstallNetCore'
+  condition: false
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Unregister And delete Azure VM'
+      inputs:
+        azureSubscription: '$(azureSubscription)'
+        scriptType: pscore
+        scriptPath: './tests/scripts/delete-azure-vms.ps1'
+        arguments:
+          -ResourceGroup '$(resourceGroup)' `
+          -Token '$(Token)'
