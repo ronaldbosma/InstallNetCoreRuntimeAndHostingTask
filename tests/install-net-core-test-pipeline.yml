@@ -85,7 +85,6 @@ stages:
               iisReset: true
 
 
-stages:
 - stage: 'DeleteTestServer'
   dependsOn: 'InstallNetCore'
   condition: false
