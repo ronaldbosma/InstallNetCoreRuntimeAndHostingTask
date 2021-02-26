@@ -76,6 +76,22 @@ stages:
                 if (-not $isHostInstalled) {
                     Write-Error "Microsoft .NET (Core) Host version $version is not installed"
                 }
+          - task: PowerShell@2
+            displayName: 'Assert is 5.0 installed'
+            inputs:
+              targetType: 'inline'
+              script: |
+                $version = "5.0";
+                $installedSoftware = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*;
+                $isRuntimeInstalled = ($installedSoftware | Where-Object { $_.DisplayName -match "Microsoft .NET (Core )?Runtime - $version.+" }) -ne $null
+                if (-not $isRuntimeInstalled) {
+                    Write-Error "Microsoft .NET (Core) Runtime version $version is not installed"
+                }
+
+                $isHostInstalled = ($installedSoftware | Where-Object { $_.DisplayName -match "Microsoft .NET (Core )?Host - $version.+" }) -ne $null
+                if (-not $isHostInstalled) {
+                    Write-Error "Microsoft .NET (Core) Host version $version is not installed"
+                }
           - task: InstallNetCoreRuntimeAndHosting@1
             displayName: 'Install 2.2'
             inputs:
