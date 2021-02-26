@@ -6,7 +6,7 @@ parameters:
 
 steps:
 - task: InstallNetCoreRuntimeAndHosting@1
-  displayName: 'Install ${{ parameters.dotNetVersion }}'
+  displayName: 'Install .NET (Core) ${{ parameters.dotNetVersion }}'
   inputs:
     version: '${{ parameters.dotNetVersion }}'
     useProxy: false
@@ -14,7 +14,7 @@ steps:
     iisReset: true
 
 - task: PowerShell@2
-  displayName: 'Assert is ${{ parameters.dotNetVersion }} installed'
+  displayName: 'Assert .NET (Core) ${{ parameters.dotNetVersion }} is installed'
   inputs:
     targetType: 'inline'
     script: |
