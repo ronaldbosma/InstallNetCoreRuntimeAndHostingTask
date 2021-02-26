@@ -1,6 +1,34 @@
 trigger: none
 
+
+variables:
+  azureSubscription: 'Azure Visual Studio Enterprise'
+  resourceGroup: 'net-core-test-group'
+  environmentName: 'net-core-test'
+
+
 stages:
+- stage: 'ProvisionTestEnvironment'
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: AzureCLI@2
+      display: 'Provision Azure VM'
+      inputs:
+        azureSubscription: '$(azureSubscription)'
+        scriptType: pscore
+        scriptLocation: './tests/scripts/provision-azure-vm.ps1'
+        arguments:
+          -ResourceGroup '$(resourceGroup)' `
+          -AdminPassword 'Adm!nP@ssw0rd' `
+          -OrganizationUrl '$(System.CollectionUri)' `
+          -TeamProject '$(System.TeamProject)' `
+          -Environment '$(environmentName)' `
+          -Token '$(Token)'
+
+
 - stage: 'InstallNetCore'
   jobs:
   - deployment: 'InstallNetCore'
