@@ -31,13 +31,12 @@ stages:
 
 - stage: 'InstallNetCore'
   dependsOn: 'ProvisionTestEnvironment'
-  condition: false
+  condition: succeeded()
   jobs:
   - deployment: 'InstallNetCore'
     environment:
-      name: 'net-core-test'
+      name: '$(environmentName)'
       resourceType: 'VirtualMachine'
-      tags: 'net-core'
     strategy:
       runOnce:
         deploy:
