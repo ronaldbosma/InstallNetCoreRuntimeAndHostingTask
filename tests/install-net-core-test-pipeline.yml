@@ -15,8 +15,7 @@ trigger: none
 
 variables:
   azureSubscription: 'Azure Visual Studio Enterprise'
-  resourceGroup: 'net-core-test-$(Build.BuildNumber)'
-  environmentName: 'net-core-test'
+  environmentName: 'net-core-test-$(Build.BuildNumber)'
 
 
 stages:
@@ -33,7 +32,6 @@ stages:
         scriptType: pscore
         scriptPath: './tests/scripts/provision-azure-vm.ps1'
         arguments:
-          -ResourceGroup '$(resourceGroup)' `
           -AdminPassword '$(AdminPassword)' `
           -OrganizationUrl '$(System.CollectionUri)' `
           -TeamProject '$(System.TeamProject)' `
@@ -85,5 +83,5 @@ stages:
         scriptType: pscore
         scriptPath: './tests/scripts/delete-azure-vms.ps1'
         arguments:
-          -ResourceGroup '$(resourceGroup)' `
+          -Environment '$(environmentName)' `
           -Token '$(Token)'
