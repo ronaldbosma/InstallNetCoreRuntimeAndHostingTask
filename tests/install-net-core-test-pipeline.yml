@@ -31,13 +31,13 @@ stages:
       runOnce:
         deploy:
           steps:
-          - template: 'tests/templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
+          - template: 'templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
             parameters:
               dotNetVersion: '2.1'
-          - template: 'tests/templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
+          - template: 'templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
             parameters:
               dotNetVersion: '5.1'
-          - template: 'tests/templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
+          - template: 'templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
             parameters:
               dotNetVersion: '5.0'
 
