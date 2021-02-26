@@ -31,49 +31,15 @@ stages:
       runOnce:
         deploy:
           steps:
-          - task: PowerShell@2
-            displayName: 'Assert is 2.1 installed'
-            inputs:
-              targetType: 'inline'
-              script: |
-                $version = "2.1";
-                $installedSoftware = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*;
-                
-                $isRuntimeInstalled = ($installedSoftware | Where-Object { $_.DisplayName -match "Microsoft .NET (Core )?Runtime - $version.+" }) -ne $null
-                if ($isRuntimeInstalled) {
-                  Write-Host "Microsoft .NET (Core) Runtime version $Version is installed"
-                } else {
-                  Write-Error "Microsoft .NET (Core) Runtime version $version is not installed"
-                }
-
-                $isHostInstalled = ($installedSoftware | Where-Object { $_.DisplayName -match "Microsoft .NET (Core )?Host - $version.+" }) -ne $null
-                if ($isHostInstalled) {
-                  Write-Host "Microsoft .NET (Core) Host version $Version is installed"
-                } else {
-                  Write-Error "Microsoft .NET (Core) Host version $version is not installed"
-                }
-
-          - task: PowerShell@2
-            displayName: 'Assert is 5.1 installed'
-            inputs:
-              targetType: 'inline'
-              script: |
-                $version = "5.1";
-                $installedSoftware = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*;
-
-                $isRuntimeInstalled = ($installedSoftware | Where-Object { $_.DisplayName -match "Microsoft .NET (Core )?Runtime - $version.+" }) -ne $null
-                if ($isRuntimeInstalled) {
-                  Write-Host "Microsoft .NET (Core) Runtime version $Version is installed"
-                } else {
-                  Write-Error "Microsoft .NET (Core) Runtime version $version is not installed"
-                }
-
-                $isHostInstalled = ($installedSoftware | Where-Object { $_.DisplayName -match "Microsoft .NET (Core )?Host - $version.+" }) -ne $null
-                if ($isHostInstalled) {
-                  Write-Host "Microsoft .NET (Core) Host version $Version is installed"
-                } else {
-                  Write-Error "Microsoft .NET (Core) Host version $version is not installed"
-                }
+          - template: 'tests/templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
+            parameters:
+              dotNetVersion: '2.1'
+          - template: 'tests/templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
+            parameters:
+              dotNetVersion: '5.1'
+          - template: 'tests/templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
+            parameters:
+              dotNetVersion: '5.0'
 
 
 - stage: 'ProvisionTestEnvironment'
