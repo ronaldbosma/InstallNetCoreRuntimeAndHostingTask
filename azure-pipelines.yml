@@ -22,7 +22,7 @@ stages:
     - task: NodeTool@0
       displayName: 'Install Node.js'
       inputs:
-        versionSpec: '13.x'
+        versionSpec: '14.x'
       
     # Extension contains tasks that depend on the VstsTaskSdk PowerShell module so we need to include this in the extension
     - powershell: 'scripts/save-vststasksdk-module.ps1'
