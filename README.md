@@ -120,4 +120,4 @@ Depending on the reason adding a site to the trusted sites might do the trick.
 
 ## Open source
 
-This task is open source [on GitHub](https://github.com/ronaldbosma/InstallNetCoreRuntimeAndHostingTask). Feedback and contributions are welcome.
+This task is open source [on GitHub](https://github.com/ronaldbosma/InstallNetCoreRuntimeAndHostingTask).
