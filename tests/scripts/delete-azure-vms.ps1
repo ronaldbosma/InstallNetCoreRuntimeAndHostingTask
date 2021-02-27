@@ -23,23 +23,22 @@ param (
     [Parameter(Mandatory)][string]$Token
 )
 
-$environmentName = $Environment.Replace(".", "-"); # Azure DevOps doesn't allow . in the name of an environment so we replace it with a -
 $ErrorActionPreference="Stop";
 
 Write-Host "Log in to Azure DevOps organization $OrganizationUrl"
 "$Token" | az devops login --organization $OrganizationUrl
 
-Write-Host "Retrieve id of environment $environmentName from Azure DevOps team project $TeamProject"
+Write-Host "Retrieve id of environment $Environment from Azure DevOps team project $TeamProject"
 $environmentId = az devops invoke `
     --area distributedtask `
     --resource environments `
     --route-parameters project=$TeamProject `
     --org $OrganizationUrl `
     --api-version "6.0-preview" `
-    --query "value[?name=='$environmentName'].id" `
+    --query "value[?name=='$Environment'].id" `
     --output tsv
 
-Write-Host "Delete environment $environmentName with id $environmentId from Azure DevOps team project $TeamProject"
+Write-Host "Delete environment $Environment with id $environmentId from Azure DevOps team project $TeamProject"
 az devops invoke `
     --area distributedtask `
     --resource environments `
@@ -51,5 +50,5 @@ az devops invoke `
 Write-Host "Log out of Azure DevOps organization $OrganizationUrl"
 az devops logout
 
-Write-Host "Delete resource group $environmentName"
-az group delete --name $environmentName --no-wait --yes
+Write-Host "Delete resource group $Environment"
+az group delete --name $Environment --no-wait --yes

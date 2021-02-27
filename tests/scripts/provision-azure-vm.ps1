@@ -39,7 +39,6 @@ param (
     [string]$Tags
 )
 
-$environmentName = $Environment.Replace(".", "-"); # Azure DevOps doesn't allow . in the name of an environment so we replace it with a -
 $location = "westeurope";
 $vmName = "vm-$(Get-Date -UFormat %s)"; # Max length for server name is 15 characters
 $registerServerScript = "https://raw.githubusercontent.com/ronaldbosma/InstallNetCoreRuntimeAndHostingTask/automated-test-pipeline/tests/scripts/register-server-in-environment.ps1";
@@ -55,22 +54,22 @@ Write-Host "Log in to Azure DevOps organization $OrganizationUrl"
 "$Token" | az devops login --organization $OrganizationUrl
 
 
-Write-Host "Check if environment $environmentName exists in Azure DevOps team project $TeamProject"
+Write-Host "Check if environment $Environment exists in Azure DevOps team project $TeamProject"
 $environmentId = az devops invoke `
     --area distributedtask `
     --resource environments `
     --route-parameters project=$TeamProject `
     --org $OrganizationUrl `
     --api-version "6.0-preview" `
-    --query "value[?name=='$environmentName'].id" `
+    --query "value[?name=='$Environment'].id" `
     --output tsv
 
 
 if ($null -eq $environmentId)
 {
-    Write-Host "Create environment $environmentName in Azure DevOps team project $TeamProject"
+    Write-Host "Create environment $Environment in Azure DevOps team project $TeamProject"
 
-    $createEnvironmentBody = @{ name = $environmentName; description = "Provisioned environment $environmentName" };
+    $createEnvironmentBody = @{ name = $Environment; description = "Provisioned environment $Environment" };
     $createEnvironmentFile = "create-environment-body.json";
     Set-Content -Path $createEnvironmentFile -Value ($createEnvironmentBody | ConvertTo-Json);
 
@@ -87,7 +86,7 @@ if ($null -eq $environmentId)
 }
 else
 {
-    Write-Host "Environment $environmentName already exists in Azure DevOps team project $TeamProject"
+    Write-Host "Environment $Environment already exists in Azure DevOps team project $TeamProject"
 }
 
 
@@ -99,8 +98,8 @@ az devops logout
 # Provision Azure virtual machine
 
 
-Write-Host "Create resource group $environmentName";
-az group create --name $environmentName --location $location;
+Write-Host "Create resource group $Environment";
+az group create --name $Environment --location $location;
 
 
 Write-Host "Provision virtual machine $vmName";
@@ -108,7 +107,7 @@ az vm create `
     --name $vmName `
     --image Win2019Datacenter `
     --admin-password $AdminPassword `
-    --resource-group $environmentName `
+    --resource-group $Environment `
     --location $location;
 
 
@@ -117,7 +116,7 @@ az vm extension set `
     --name CustomScriptExtension `
     --publisher Microsoft.Compute `
     --vm-name $vmName `
-    --resource-group $environmentName `
+    --resource-group $Environment `
     --settings '{\"commandToExecute\":\"powershell.exe Install-WindowsFeature -Name Web-Server -IncludeManagementTools\"}';
 
 
@@ -125,11 +124,11 @@ az vm extension set `
 # Register Azure virtual machine in Azure DevOps environment
 
 
-Write-Host "Add $vmName to environment $environmentName in Azure DevOps team project $TeamProject";
-$registerServerSettings="{`\`"fileUris`\`":[`\`"$registerServerScript`\`"], `\`"commandToExecute`\`":`\`"powershell.exe ./register-server-in-environment.ps1 -OrganizationUrl '$OrganizationUrl' -TeamProject '$TeamProject' -Environment '$environmentName' -Token '$Token' -Tags '$Tags'`\`"}";
+Write-Host "Add $vmName to environment $Environment in Azure DevOps team project $TeamProject";
+$registerServerSettings="{`\`"fileUris`\`":[`\`"$registerServerScript`\`"], `\`"commandToExecute`\`":`\`"powershell.exe ./register-server-in-environment.ps1 -OrganizationUrl '$OrganizationUrl' -TeamProject '$TeamProject' -Environment '$Environment' -Token '$Token' -Tags '$Tags'`\`"}";
 az vm extension set `
     --name CustomScriptExtension `
     --publisher Microsoft.Compute `
     --vm-name $vmName `
-    --resource-group $environmentName `
+    --resource-group $Environment `
     --settings $registerServerSettings;
