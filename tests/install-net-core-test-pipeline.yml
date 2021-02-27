@@ -15,25 +15,10 @@ trigger: none
 
 variables:
   azureSubscription: 'Azure Visual Studio Enterprise'
-  environmentName: "net-core-test-provisioned-${{ variables['Build.SourceVersion'] }}"
+  environmentName: "net-core-test-${{ variables['Build.SourceVersion'] }}"
 
 
 stages:
-- stage: 'Test'
-  jobs:
-  - job:
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - task: PowerShell@2
-      displayName: 'Test $(environmentName)'
-      inputs:
-        targetType: 'inline'
-        script: |
-          Write-Host "Environment $(environmentName)";
-          Write-Error "Fail"
-
-
 - stage: 'ProvisionTestEnvironment'
   condition: succeeded()
   jobs:
