@@ -55,22 +55,40 @@ Write-Host "Log in to Azure DevOps organization $OrganizationUrl"
 "$Token" | az devops login --organization $OrganizationUrl
 
 
-Write-Host "Create environment $environmentName in Azure DevOps team project $TeamProject"
-
-$createEnvironmentBody = @{ name = $environmentName; description = "Provisioned environment $environmentName" };
-$createEnvironmentFile = "create-environment-body.json";
-Set-Content -Path $createEnvironmentFile -Value ($createEnvironmentBody | ConvertTo-Json);
-
-$environment = az devops invoke `
+Write-Host "Check if environment $environmentName exists in Azure DevOps team project $TeamProject"
+$environmentId = az devops invoke `
     --area distributedtask `
     --resource environments `
     --route-parameters project=$TeamProject `
     --org $OrganizationUrl `
-    --http-method POST `
-    --in-file $createEnvironmentFile `
-    --api-version "6.0-preview";
+    --api-version "6.0-preview" `
+    --query "value[?name=='$environmentName'].id" `
+    --output tsv
 
-Remove-Item $createEnvironmentFile -Force;
+
+if ($null -eq $environmentId)
+{
+    Write-Host "Create environment $environmentName in Azure DevOps team project $TeamProject"
+
+    $createEnvironmentBody = @{ name = $environmentName; description = "Provisioned environment $environmentName" };
+    $createEnvironmentFile = "create-environment-body.json";
+    Set-Content -Path $createEnvironmentFile -Value ($createEnvironmentBody | ConvertTo-Json);
+
+    $environment = az devops invoke `
+        --area distributedtask `
+        --resource environments `
+        --route-parameters project=$TeamProject `
+        --org $OrganizationUrl `
+        --http-method POST `
+        --in-file $createEnvironmentFile `
+        --api-version "6.0-preview";
+
+    Remove-Item $createEnvironmentFile -Force;
+}
+else
+{
+    Write-Host "Environment $environmentName already exists in Azure DevOps team project $TeamProject"
+}
 
 
 Write-Host "Log out of Azure DevOps organization $OrganizationUrl"
@@ -103,7 +121,7 @@ az vm extension set `
     --settings '{\"commandToExecute\":\"powershell.exe Install-WindowsFeature -Name Web-Server -IncludeManagementTools\"}';
 
 
-    
+
 # Register Azure virtual machine in Azure DevOps environment
 
 
