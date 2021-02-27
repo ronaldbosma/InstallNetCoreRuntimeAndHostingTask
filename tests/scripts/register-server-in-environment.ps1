@@ -3,7 +3,7 @@
     Register server in Azure Pipelines environment.
 
     .DESCRIPTION
-    Downloads and installs agent on this server and then registers the server in an Azure Pipelines environment.
+    Downloads and installs agent on the server and then registers the server in an Azure Pipelines environment.
     This script is based on the registration script that you can copy from the Azure DevOps portal when manually adding a Virtual machine resource to an environment.
 
     .PARAMETER OrganizationUrl
@@ -13,7 +13,7 @@
     Name of the team project. For example myProject.
 
     .PARAMETER Environment
-    Name of the environment. For example myEnvironment.
+    Name of the environment. For example: myEnvironment.
 
     .PARAMETER Token
     Personal Access Token. The token needs the scope 'Environment (Read & manage)' in Azure DevOps.
