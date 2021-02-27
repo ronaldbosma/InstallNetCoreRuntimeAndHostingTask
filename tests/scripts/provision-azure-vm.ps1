@@ -41,7 +41,7 @@ param (
 
 $location = "westeurope";
 $vmName = "vm-$(Get-Date -UFormat %s)"; # Max length for server name is 15 characters
-$registerServerScript = "https://raw.githubusercontent.com/ronaldbosma/InstallNetCoreRuntimeAndHostingTask/automated-test-pipeline/tests/scripts/register-server-in-environment.ps1";
+$registerServerScript = "https://raw.githubusercontent.com/ronaldbosma/InstallNetCoreRuntimeAndHostingTask/master/tests/scripts/register-server-in-environment.ps1";
 
 $ErrorActionPreference="Stop";
 
