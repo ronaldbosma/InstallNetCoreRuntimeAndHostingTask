@@ -68,6 +68,9 @@ stages:
           - template: 'templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
             parameters:
               dotNetVersion: '5.0'
+          - template: 'templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
+            parameters:
+              dotNetVersion: '6.0'
 
 
 - stage: 'DeleteTestEnvironment'
