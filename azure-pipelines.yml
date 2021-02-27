@@ -19,6 +19,7 @@ stages:
       clean: all
 
     steps:
+    # We're installing Node version 13.x, because 14.x is causing the Azure DevOps Extension task to fail
     - task: NodeTool@0
       displayName: 'Install Node.js'
       inputs:
@@ -57,6 +58,12 @@ stages:
     steps:
     - checkout: none    # No need to checkout code. We're only using an artifact in this stage.
     
+    # We're installing Node version 13.x, because 14.x is causing the Azure DevOps Extension task to fail
+    - task: NodeTool@0
+      displayName: 'Install Node.js'
+      inputs:
+        versionSpec: '13.x'
+
     - task: TfxInstaller@2
       inputs:
         checkLatest: true
@@ -92,6 +99,12 @@ stages:
     steps:
     - checkout: none    # No need to checkout code. We're only using an artifact in this stage.
     
+    # We're installing Node version 13.x, because 14.x is causing the Azure DevOps Extension task to fail
+    - task: NodeTool@0
+      displayName: 'Install Node.js'
+      inputs:
+        versionSpec: '13.x'
+        
     - task: TfxInstaller@2
       inputs:
         checkLatest: true
