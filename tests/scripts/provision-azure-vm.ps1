@@ -9,10 +9,10 @@
     URL of the organization. For example: https://myaccount.visualstudio.com or http://onprem:8080/tfs.
 
     .PARAMETER TeamProject
-    Name of the team project. For example myProject.
+    Name of the team project. For example: myProject.
 
     .PARAMETER Environment
-    Name of the environment. For example myEnvironment.
+    Name of the environment. For example: myEnvironment.
     Will be used for the name of the Azure DevOps environment and Azure resource group.
 
     .PARAMETER AdminPassword
@@ -25,10 +25,10 @@
     Optional comma separated list of tags to add to the server. For example: "web, sql".
 
     .EXAMPLE
-    PS> .\provision-azure-vm.ps1 -AdminPassword Adm!nP@ssw0rd -OrganizationUrl https://myaccount.visualstudio.com -TeamProject myProject -Environment myEnvironment -Token myToken
+    PS> .\provision-azure-vm.ps1 -OrganizationUrl https://myaccount.visualstudio.com -TeamProject myProject -Environment myEnvironment -AdminPassword Adm!nP@ssw0rd -Token myToken
 
     .EXAMPLE
-    PS> .\provision-azure-vm.ps1 -AdminPassword Adm!nP@ssw0rd -OrganizationUrl https://myaccount.visualstudio.com -TeamProject myProject -Environment myEnvironment -Token myToken -Tags "web, sql"
+    PS> .\provision-azure-vm.ps1 -OrganizationUrl https://myaccount.visualstudio.com -TeamProject myProject -Environment myEnvironment -AdminPassword Adm!nP@ssw0rd -Token myToken -Tags "web, sql"
 #>
 param (
     [Parameter(Mandatory)][string]$OrganizationUrl,
