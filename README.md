@@ -2,6 +2,9 @@
 
 Azure DevOps pipeline task that downloads and installs the latest .NET Core runtime and hosting bundle.
 
+## .NET Core coming to Microsoft Update
+Starting in December 2020 .NET Core has been added to Microsoft Update. Before you proceed and use this custom extension, have a look at [.NET Core coming to Microsoft Update](https://devblogs.microsoft.com/dotnet/net-core-updates-coming-to-microsoft-update/).
+
 ## Supported .NET Core versions
 - 2.1
 - 2.2
