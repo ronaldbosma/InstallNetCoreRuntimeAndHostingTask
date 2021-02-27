@@ -12,7 +12,7 @@ stages:
   jobs:
   - job:
     pool:
-      vmImage: 'windows-latest'
+      vmImage: 'ubuntu-latest'
       demands: npm
 
     workspace:
