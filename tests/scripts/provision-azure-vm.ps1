@@ -5,9 +5,6 @@
     .DESCRIPTION
     Provisions a server in Azure and then registers the server in an Azure Pipelines environment.
 
-    .PARAMETER AdminPassword
-    Password of the administrator of the VM. For example: Adm!nP@ssw0rd.
-
     .PARAMETER OrganizationUrl
     URL of the organization. For example: https://myaccount.visualstudio.com or http://onprem:8080/tfs.
 
@@ -17,6 +14,9 @@
     .PARAMETER Environment
     Name of the environment. For example myEnvironment.
     Will be used for the name of the Azure DevOps environment and Azure resource group.
+
+    .PARAMETER AdminPassword
+    Password of the administrator of the VM. For example: Adm!nP@ssw0rd.
 
     .PARAMETER Token
     Personal Access Token. The token needs the scope 'Environment (Read & manage)' in Azure DevOps.
@@ -31,10 +31,10 @@
     PS> .\provision-azure-vm.ps1 -AdminPassword Adm!nP@ssw0rd -OrganizationUrl https://myaccount.visualstudio.com -TeamProject myProject -Environment myEnvironment -Token myToken -Tags "web, sql"
 #>
 param (
-    [Parameter(Mandatory)][string]$AdminPassword,
     [Parameter(Mandatory)][string]$OrganizationUrl,
     [Parameter(Mandatory)][string]$TeamProject,
     [Parameter(Mandatory)][string]$Environment,
+    [Parameter(Mandatory)][string]$AdminPassword,
     [Parameter(Mandatory)][string]$Token,
     [string]$Tags
 )

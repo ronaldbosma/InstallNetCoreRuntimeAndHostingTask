@@ -33,10 +33,10 @@ stages:
         scriptType: pscore
         scriptPath: './tests/scripts/provision-azure-vm.ps1'
         arguments:
-          -AdminPassword '$(AdminPassword)' `
           -OrganizationUrl '$(System.CollectionUri)' `
           -TeamProject '$(System.TeamProject)' `
           -Environment '$(environmentName)' `
+          -AdminPassword '$(AdminPassword)' `
           -Token '$(Token)'
 
 
