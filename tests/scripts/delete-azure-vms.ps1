@@ -11,7 +11,7 @@
     Is also the name of the correspondeing resource group that will be deleted.
     
     .PARAMETER Token
-    Personal Access Token. The token needs the scope 'Environment (Read & manage)' in Azure DevOps.
+    Personal Access Token. The token needs the scopes 'Environment (Read & manage)' and 'Tokens (Read & manage)' in Azure DevOps.
 
     .EXAMPLE
     PS> .\delete-azure-vms.ps1 -Environment Environment -Token myToken
@@ -25,6 +25,9 @@ param (
 
 $environmentName = $Environment.Replace(".", "-"); # Azure DevOps doesn't allow . in the name of an environment so we replace it with a -
 $ErrorActionPreference="Stop";
+
+Write-Host "Log in to Azure DevOps organization $OrganizationUrl"
+"$Token" | az devops login --organization $OrganizationUrl
 
 Write-Host "Retrieve id of environment $environmentName from Azure DevOps team project $TeamProject"
 $environmentId = az devops invoke `

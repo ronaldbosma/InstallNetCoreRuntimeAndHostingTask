@@ -47,10 +47,16 @@ $registerServerScript = "https://raw.githubusercontent.com/ronaldbosma/InstallNe
 $ErrorActionPreference="Stop";
 
 
+Write-Host "Log in to Azure DevOps organization $OrganizationUrl"
+"$Token" | az devops login --organization $OrganizationUrl
+
+
 Write-Host "Create environment $environmentName in Azure DevOps team project $TeamProject"
+
 $createEnvironmentBody = @{ name = $environmentName; description = "Provisioned environment $environmentName" };
 $createEnvironmentFile = "create-environment-body.json";
 Set-Content -Path $createEnvironmentFile -Value ($createEnvironmentBody | ConvertTo-Json);
+
 $environment = az devops invoke `
     --area distributedtask `
     --resource environments `
