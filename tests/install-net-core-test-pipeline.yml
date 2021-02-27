@@ -69,7 +69,7 @@ stages:
               dotNetVersion: '5.0'
 
 
-- stage: 'DeleteTestServer'
+- stage: 'DeleteTestEnvironment'
   dependsOn: 'InstallNetCore'
   condition: succeeded()
   jobs:
@@ -78,11 +78,11 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - task: AzureCLI@2
-      displayName: 'Unregister And delete Azure VM'
+      displayName: 'Delete environment and resource group $(environmentName)'
       inputs:
         azureSubscription: '$(azureSubscription)'
         scriptType: pscore
-        scriptPath: './tests/scripts/delete-azure-vms.ps1'
+        scriptPath: './tests/scripts/delete-environment-and-resource-group.ps1'
         arguments:
           -OrganizationUrl '$(System.CollectionUri)' `
           -TeamProject '$(System.TeamProject)' `
