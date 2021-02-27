@@ -29,11 +29,11 @@ stages:
     - powershell: 'scripts/save-vststasksdk-module.ps1'
       displayName: 'Download Required Powershell Modules'
 
-    - task: TfxInstaller@2
+    - task: TfxInstaller@3
       inputs:
         checkLatest: true
         
-    - task: PackageAzureDevOpsExtension@2
+    - task: PackageAzureDevOpsExtension@3
       inputs:
         rootFolder: '$(System.DefaultWorkingDirectory)'
         outputPath: '$(Build.ArtifactStagingDirectory)/extension'
@@ -64,14 +64,14 @@ stages:
       inputs:
         versionSpec: '13.x'
 
-    - task: TfxInstaller@2
+    - task: TfxInstaller@3
       inputs:
         checkLatest: true
 
     - download: current
       artifact: 'extension'
     
-    - task: PublishAzureDevOpsExtension@2
+    - task: PublishAzureDevOpsExtension@3
       inputs:
         connectTo: 'VsTeam'
         connectedServiceName: 'Visual Studio Marketplace'
@@ -105,14 +105,14 @@ stages:
       inputs:
         versionSpec: '13.x'
         
-    - task: TfxInstaller@2
+    - task: TfxInstaller@3
       inputs:
         checkLatest: true
 
     - download: current
       artifact: 'extension'
     
-    - task: PublishAzureDevOpsExtension@2
+    - task: PublishAzureDevOpsExtension@3
       inputs:
         connectTo: 'VsTeam'
         connectedServiceName: 'Visual Studio Marketplace'
