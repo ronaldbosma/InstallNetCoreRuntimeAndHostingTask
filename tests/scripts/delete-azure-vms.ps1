@@ -48,5 +48,8 @@ az devops invoke `
     --http-method DELETE `
     --api-version "6.0-preview"
 
+Write-Host "Log out of Azure DevOps organization $OrganizationUrl"
+az devops logout
+
 Write-Host "Delete resource group $environmentName"
 az group delete --name $environmentName --no-wait --yes

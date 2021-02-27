@@ -47,6 +47,10 @@ $registerServerScript = "https://raw.githubusercontent.com/ronaldbosma/InstallNe
 $ErrorActionPreference="Stop";
 
 
+
+# Provision Azure DevOps environment
+
+
 Write-Host "Log in to Azure DevOps organization $OrganizationUrl"
 "$Token" | az devops login --organization $OrganizationUrl
 
@@ -69,6 +73,14 @@ $environment = az devops invoke `
 Remove-Item $createEnvironmentFile -Force;
 
 
+Write-Host "Log out of Azure DevOps organization $OrganizationUrl"
+az devops logout
+
+
+
+# Provision Azure virtual machine
+
+
 Write-Host "Create resource group $environmentName";
 az group create --name $environmentName --location $location;
 
@@ -89,6 +101,10 @@ az vm extension set `
     --vm-name $vmName `
     --resource-group $environmentName `
     --settings '{\"commandToExecute\":\"powershell.exe Install-WindowsFeature -Name Web-Server -IncludeManagementTools\"}';
+
+
+    
+# Register Azure virtual machine in Azure DevOps environment
 
 
 Write-Host "Add $vmName to environment $environmentName in Azure DevOps team project $TeamProject";
