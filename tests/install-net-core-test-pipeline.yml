@@ -1,20 +1,90 @@
+# This pipeline is used to test the custom InstallNetCoreRuntimeAndHosting task.
+#
+# This pipeline:
+# - provisions a server in Azure and registers it in an Azure Pipelines environment
+# - install all versions of the .NET Core Runtime & Hosting bundle on the server and verify that it was successful
+# - removes the Azure Pipelines environment and the Azure resource group
+# 
+# The following variables need to be provided to the pipeline:
+# - Token         : a Personal Access Token with the scopes 'Environment (Read & manage)' and 'Tokens (Read & manage)'.
+# - AdminPassword : a password for the Admin user of the provisioned Azure server.
+
+
 trigger: none
 
+
+variables:
+  azureSubscription: 'Azure Visual Studio Enterprise'
+  environmentName: "net-core-test-${{ variables['Build.SourceVersion'] }}"
+
+
 stages:
+- stage: 'ProvisionTestEnvironment'
+  condition: succeeded()
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Provision and register Azure VM'
+      inputs:
+        azureSubscription: '$(azureSubscription)'
+        scriptType: pscore
+        scriptPath: './tests/scripts/provision-azure-vm.ps1'
+        arguments:
+          -OrganizationUrl '$(System.CollectionUri)' `
+          -TeamProject '$(System.TeamProject)' `
+          -Environment '$(environmentName)' `
+          -AdminPassword '$(AdminPassword)' `
+          -Token '$(Token)'
+
+
 - stage: 'InstallNetCore'
+  dependsOn: 'ProvisionTestEnvironment'
+  condition: succeeded()
   jobs:
   - deployment: 'InstallNetCore'
     environment:
-      name: 'net-core-test'
+      name: '$(environmentName)'
       resourceType: 'VirtualMachine'
-      tags: 'net-core'
     strategy:
       runOnce:
         deploy:
           steps:
-          - task: InstallNetCoreRuntimeAndHosting@1
-            inputs:
-              version: '5.0'
-              useProxy: false
-              norestart: false
-              iisReset: true
+          - template: 'templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
+            parameters:
+              dotNetVersion: '2.1'
+          - template: 'templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
+            parameters:
+              dotNetVersion: '2.2'
+          - template: 'templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
+            parameters:
+              dotNetVersion: '3.0'
+          - template: 'templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
+            parameters:
+              dotNetVersion: '3.1'
+          - template: 'templates/execute-and-assert-installnetcoreruntimeandhosting-task.yml'
+            parameters:
+              dotNetVersion: '5.0'
+
+
+- stage: 'DeleteTestEnvironment'
+  dependsOn: 'InstallNetCore'
+  condition: succeeded()
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Delete environment and resource group $(environmentName)'
+      inputs:
+        azureSubscription: '$(azureSubscription)'
+        scriptType: pscore
+        scriptPath: './tests/scripts/delete-environment-and-resource-group.ps1'
+        arguments:
+          -OrganizationUrl '$(System.CollectionUri)' `
+          -TeamProject '$(System.TeamProject)' `
+          -Environment '$(environmentName)' `
+          -Token '$(Token)'

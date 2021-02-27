@@ -1,0 +1,36 @@
+# This template executes the custom InstallNetCoreRuntimeAndHosting task and asserts that the .NET (Core) Runtime & Hosting bundle has been installed.
+
+parameters:
+  dotNetVersion: '' # The .NET version to install and assert. E.g. 5.0
+
+
+steps:
+- task: InstallNetCoreRuntimeAndHosting@1
+  displayName: 'Install .NET (Core) ${{ parameters.dotNetVersion }}'
+  inputs:
+    version: '${{ parameters.dotNetVersion }}'
+    useProxy: false
+    norestart: true
+    iisReset: true
+
+- task: PowerShell@2
+  displayName: 'Assert .NET (Core) ${{ parameters.dotNetVersion }} is installed'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $version = "${{ parameters.dotNetVersion }}";
+      $installedSoftware = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*;
+      
+      $isRuntimeInstalled = ($installedSoftware | Where-Object { $_.DisplayName -match "Microsoft .NET (Core )?Runtime - $version.+" }) -ne $null
+      if ($isRuntimeInstalled) {
+        Write-Host "Microsoft .NET (Core) Runtime version $Version is installed"
+      } else {
+        Write-Error "Microsoft .NET (Core) Runtime version $version is not installed"
+      }
+
+      $isHostInstalled = ($installedSoftware | Where-Object { $_.DisplayName -match "Microsoft .NET (Core )?Host - $version.+" }) -ne $null
+      if ($isHostInstalled) {
+        Write-Host "Microsoft .NET (Core) Host version $Version is installed"
+      } else {
+        Write-Error "Microsoft .NET (Core) Host version $version is not installed"
+      }
