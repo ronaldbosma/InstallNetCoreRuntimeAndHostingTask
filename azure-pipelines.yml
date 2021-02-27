@@ -19,21 +19,15 @@ stages:
       clean: all
 
     steps:
-    # We're installing Node version 13.x, because 14.x is causing the Azure DevOps Extension task to fail
-    - task: NodeTool@0
-      displayName: 'Install Node.js'
-      inputs:
-        versionSpec: '13.x'
-      
     # Extension contains tasks that depend on the VstsTaskSdk PowerShell module so we need to include this in the extension
     - powershell: 'scripts/save-vststasksdk-module.ps1'
       displayName: 'Download Required Powershell Modules'
 
-    - task: TfxInstaller@2
+    - task: TfxInstaller@3
       inputs:
         checkLatest: true
         
-    - task: PackageAzureDevOpsExtension@2
+    - task: PackageAzureDevOpsExtension@3
       inputs:
         rootFolder: '$(System.DefaultWorkingDirectory)'
         outputPath: '$(Build.ArtifactStagingDirectory)/extension'
@@ -58,20 +52,14 @@ stages:
     steps:
     - checkout: none    # No need to checkout code. We're only using an artifact in this stage.
     
-    # We're installing Node version 13.x, because 14.x is causing the Azure DevOps Extension task to fail
-    - task: NodeTool@0
-      displayName: 'Install Node.js'
-      inputs:
-        versionSpec: '13.x'
-
-    - task: TfxInstaller@2
+    - task: TfxInstaller@3
       inputs:
         checkLatest: true
 
     - download: current
       artifact: 'extension'
     
-    - task: PublishAzureDevOpsExtension@2
+    - task: PublishAzureDevOpsExtension@3
       inputs:
         connectTo: 'VsTeam'
         connectedServiceName: 'Visual Studio Marketplace'
@@ -99,20 +87,14 @@ stages:
     steps:
     - checkout: none    # No need to checkout code. We're only using an artifact in this stage.
     
-    # We're installing Node version 13.x, because 14.x is causing the Azure DevOps Extension task to fail
-    - task: NodeTool@0
-      displayName: 'Install Node.js'
-      inputs:
-        versionSpec: '13.x'
-        
-    - task: TfxInstaller@2
+    - task: TfxInstaller@3
       inputs:
         checkLatest: true
 
     - download: current
       artifact: 'extension'
     
-    - task: PublishAzureDevOpsExtension@2
+    - task: PublishAzureDevOpsExtension@3
       inputs:
         connectTo: 'VsTeam'
         connectedServiceName: 'Visual Studio Marketplace'
