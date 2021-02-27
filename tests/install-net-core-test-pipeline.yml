@@ -2,11 +2,11 @@
 #
 # This pipeline:
 # - provisions a server in Azure and registers it in an Azure Pipelines environment
-# - install all version of the .NET Core Runtime & Hosting bundle on the server and verify that it was successful
-# - unregister the server from the Azure Pipelines environment and remove the Azure resource group
+# - install all versions of the .NET Core Runtime & Hosting bundle on the server and verify that it was successful
+# - removes the Azure Pipelines environment and the Azure resource group
 # 
 # The following variables need to be provided to the pipeline:
-# - Token         : a Personal Access Token with the scope 'Environment (Read & manage)'.
+# - Token         : a Personal Access Token with the scopes 'Environment (Read & manage)' and 'Tokens (Read & manage)'.
 # - AdminPassword : a password for the Admin user of the provisioned Azure server.
 
 
