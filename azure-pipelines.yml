@@ -49,7 +49,7 @@ stages:
 - stage: 'PublishPrivateVersion'
   displayName: 'Publish Private Version Of Extension'
   dependsOn: 'PackageExtension'
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
   jobs:
   - job:
     pool:
