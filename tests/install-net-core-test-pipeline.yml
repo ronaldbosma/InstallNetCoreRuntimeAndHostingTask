@@ -19,7 +19,23 @@ variables:
 
 
 stages:
+- stage: 'Test'
+  jobs:
+  - job:
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: PowerShell@2
+      displayName: 'Test $(environmentName)'
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host "Environment $(environmentName)";
+          Write-Error "Fail"
+
+
 - stage: 'ProvisionTestEnvironment'
+  condition: succeeded()
   jobs:
   - job:
     pool:
