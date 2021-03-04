@@ -20,7 +20,7 @@ variables:
 
 
 stages:
-- stage: 'ProvisionTestEnvironment'
+- stage: 'Provision'
   condition: succeeded()
   jobs:
   - job:
@@ -41,8 +41,8 @@ stages:
           -Token '$(Token)'
 
 
-- stage: 'InstallNetCore'
-  dependsOn: 'ProvisionTestEnvironment'
+- stage: 'Test'
+  dependsOn: 'Provision'
   condition: succeeded()
   jobs:
   - deployment: 'InstallNetCore'
@@ -73,8 +73,8 @@ stages:
               dotNetVersion: '6.0'
 
 
-- stage: 'DeleteTestEnvironment'
-  dependsOn: 'InstallNetCore'
+- stage: 'Cleanup'
+  dependsOn: 'Test'
   condition: succeeded()
   jobs:
   - job:
