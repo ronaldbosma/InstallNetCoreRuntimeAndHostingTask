@@ -17,7 +17,6 @@ pr: none
 variables:
   azureSubscription: 'Azure Visual Studio Enterprise'
   environmentName: "net-core-test-${{ variables['Build.SourceVersion'] }}"
-  testToken: '$(System.AccessToken)'
 
 
 stages:
@@ -39,7 +38,7 @@ stages:
           -TeamProject '$(System.TeamProject)' `
           -Environment '$(environmentName)' `
           -AdminPassword '$(AdminPassword)' `
-          -Token '$(testToken)'
+          -Token '$(Token)'
 
 
 - stage: 'InstallNetCore'
@@ -92,4 +91,4 @@ stages:
           -OrganizationUrl '$(System.CollectionUri)' `
           -TeamProject '$(System.TeamProject)' `
           -Environment '$(environmentName)' `
-          -Token '$(testToken)'
+          -Token '$(Token)'
