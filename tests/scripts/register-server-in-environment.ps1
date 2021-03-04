@@ -121,6 +121,9 @@ $WebClient.DownloadFile($Uri, $agentZip);
 Add-Type -AssemblyName System.IO.Compression.FileSystem;
 [System.IO.Compression.ZipFile]::ExtractToDirectory( $agentZip, "$PWD");
 
+# Remove the zip file
+Remove-Item $agentZip;
+
 
 # Register the agent in the environment
 Write-Host "Register agent $agentName in $Environment";
@@ -134,5 +137,8 @@ else
 }
 
 
-# Remove the zip file
-Remove-Item $agentZip;
+# Raise an exception if the registration of the agent failed
+if ($LastExitCode -ne 0)
+{
+    throw "Something went wrong during the registration agent $agentname in $Environment. The script .\config.cmd exited with code $LastExitCode. See the log file in '$PWD\_diag' for more information."
+}
