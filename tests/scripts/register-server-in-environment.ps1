@@ -140,5 +140,5 @@ else
 # Raise an exception if the registration of the agent failed
 if ($LastExitCode -ne 0)
 {
-    throw "Something went wrong during the registration agent $agentname in $Environment. The script .\config.cmd exited with code $LastExitCode. See the log file in '$PWD\_diag' for more information."
+    throw "Something went wrong during the registration agent $agentname in $Environment. The script .\config.cmd exited with code $LastExitCode. See the log file in '$PWD\_diag' for more information.";
 }
