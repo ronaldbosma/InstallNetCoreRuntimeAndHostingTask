@@ -22,12 +22,17 @@ function Get-DotNetCoreInstaller([string]$dotNetVersion, [bool]$useProxy, [strin
     Write-Host Latest Release Date: $releases.'latest-release-date'
 
 
-    # Select the latest release
+    # Select the latest release by version and release date
     $latestRelease = $releases.releases | Where-Object { ($_.'release-version' -eq $releases.'latest-release') -and ($_.'release-date' -eq $releases.'latest-release-date') }
         
     if ($null -eq $latestRelease) {
-        Write-Host "##vso[task.logissue type=error;]No latest release found"
-        [Environment]::Exit(1)
+        # Select release only by version (in the past the date format of latest-release-date has differed from release-date)
+        $latestRelease = $releases.releases | Where-Object { $_.'release-version' -eq $releases.'latest-release' } | Select-Object -First 1
+
+        if ($null -eq $latestRelease) {
+            Write-Host "##vso[task.logissue type=error;]No latest release found"
+            [Environment]::Exit(1)
+        }
     }
 
 
