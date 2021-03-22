@@ -17,13 +17,14 @@ try
         $proxyServerAddress = Get-VstsInput -Name proxyServerAddress -Require
     }
     $iisReset = Get-VstsInput -Name iisReset -AsBool -Require
+    $installArguments = Get-VstsInput -Name installArguments
 
     $workingDirectory = Get-VstsTaskVariable -Name "System.DefaultWorkingDirectory"
     $workingDirectory = Join-Path $workingDirectory $dotNetVersion
     $outputFilePath = Join-Path $workingDirectory "dotnet-hosting-win.exe"
 
     $installerFilePath = Get-DotNetCoreInstaller $dotNetVersion $useProxy $proxyServerAddress $outputFilePath
-    Install-DotNetCore $installerFilePath $norestart $iisReset
+    Install-DotNetCore $installerFilePath $norestart $iisReset $installArguments
 }
 finally
 {

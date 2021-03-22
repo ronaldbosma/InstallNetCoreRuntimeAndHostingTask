@@ -23,6 +23,7 @@ Starting in December 2020 .NET Core has been added to Microsoft Update. Before y
     #proxyServerAddress: # Required when useProxy == true
     #norestart: false
     #iisReset: true
+    #installArguments: # Optional
 ```
 
 ## Arguments
@@ -34,6 +35,7 @@ Starting in December 2020 .NET Core has been added to Microsoft Update. Before y
 | `proxyServerAddress`<br />Proxy server address | The URL of the proxy server to use when downloading the installer. Needs to include the port number.<br />Example: `http://proxy.example.com:80` |
 | `norestart`<br />No Restart | Enabling this option will pass the `/norestart` argument to the installer to suppress any attempts to restart. |
 | `iisReset`<br />Perform IIS reset | Enabling this option will reset IIS after installation.<br />The reset is recommended for all changes to take effect. |
+| `installArguments`<br />Install arguments | Optional arguments that will be passed to the installer. Example: `'OPT_NO_ANCM=1 OPT_NO_X86=1'`. See [these options](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/hosting-bundle?view=aspnetcore-5.0#options) for more information. |
 
 ## Examples
 
