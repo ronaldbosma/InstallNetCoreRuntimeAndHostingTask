@@ -16,7 +16,8 @@ pr: none
 
 variables:
   azureSubscription: 'Azure Visual Studio Enterprise'
-  environmentName: "net-core-test-${{ variables['Build.SourceVersion'] }}"
+  environmentName: "net-core-test-${{ variables['Build.SourceBranch'] }}"
+  #environmentName: "net-core-test-${{ variables['Build.SourceVersion'] }}"
 
 
 stages:
@@ -43,7 +44,7 @@ stages:
 
 - stage: 'Test'
   dependsOn: 'Provision'
-  condition: succeeded()
+  condition: false
   jobs:
   - deployment: 'InstallNetCore'
     environment:
@@ -75,7 +76,7 @@ stages:
 
 - stage: 'Cleanup'
   dependsOn: 'Test'
-  condition: succeeded()
+  condition: false
   jobs:
   - job:
     pool:
