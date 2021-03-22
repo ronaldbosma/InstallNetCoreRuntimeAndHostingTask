@@ -16,12 +16,12 @@ pr: none
 
 variables:
   azureSubscription: 'Azure Visual Studio Enterprise'
-  environmentName: "net-core-test-${{ variables['Build.SourceBranchName'] }}"
-  #environmentName: "net-core-test-${{ variables['Build.SourceVersion'] }}"
+  environmentName: "net-core-test-${{ variables['Build.SourceVersion'] }}"
 
 
 stages:
 - stage: 'Provision'
+  condition: succeeded()
   jobs:
   - job:
     pool:
@@ -40,30 +40,10 @@ stages:
           -AdminPassword '$(AdminPassword)' `
           -Token '$(Token)'
 
-- stage: Temp
-  dependsOn: 'Provision'
-  condition: succeeded()
-  jobs:
-  - deployment: 'Temp'
-    environment:
-      name: '$(environmentName)'
-      resourceType: 'VirtualMachine'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: InstallNetCoreRuntimeAndHosting@1
-            inputs:
-              version: '3.1'
-              useProxy: false
-              norestart: true
-              iisReset: true
-              installArguments: 'OPT_NO_ANCM=1 OPT_NO_X86=1'
-
 
 - stage: 'Test'
   dependsOn: 'Provision'
-  condition: false
+  condition: succeeded()
   jobs:
   - deployment: 'InstallNetCore'
     environment:
@@ -95,7 +75,7 @@ stages:
 
 - stage: 'Cleanup'
   dependsOn: 'Test'
-  condition: false
+  condition: succeeded()
   jobs:
   - job:
     pool:
