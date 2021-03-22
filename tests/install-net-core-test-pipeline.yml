@@ -16,7 +16,7 @@ pr: none
 
 variables:
   azureSubscription: 'Azure Visual Studio Enterprise'
-  environmentName: "net-core-test-${{ variables['Build.SourceBranchName'] }}-3"
+  environmentName: "net-core-test-${{ variables['Build.SourceBranchName'] }}"
   #environmentName: "net-core-test-${{ variables['Build.SourceVersion'] }}"
 
 
