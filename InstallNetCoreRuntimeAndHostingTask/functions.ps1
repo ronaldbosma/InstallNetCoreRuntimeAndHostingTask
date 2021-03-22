@@ -60,7 +60,7 @@ function Get-DotNetCoreInstaller([string]$dotNetVersion, [bool]$useProxy, [strin
     return $outputFilePath
 }
 
-function Install-DotNetCore([string]$installerFilePath, [bool]$norestart, [bool]$iisReset)
+function Install-DotNetCore([string]$installerFilePath, [bool]$norestart, [bool]$iisReset, [string]$userDefinedInstallArguments)
 {
     $installerFolder = Split-Path $installerFilePath -Parent
     $fileName = Split-Path $installerFilePath -Leaf
@@ -77,6 +77,10 @@ function Install-DotNetCore([string]$installerFilePath, [bool]$norestart, [bool]
     $installationArguments = "/passive /log $logFilePath"
     if ($norestart -eq $true) {
         $installationArguments += " /norestart"
+    }
+    if (-not [string]::IsNullOrWhiteSpace($userDefinedInstallArguments))
+    {
+        $installationArguments += " $userDefinedInstallArguments"
     }
     Write-Host Execute $installerFilePath with the following arguments: $installationArguments
     Write-Host Executing installer. This could take a few minutes...

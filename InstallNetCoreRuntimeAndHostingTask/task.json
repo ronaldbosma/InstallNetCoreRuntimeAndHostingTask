@@ -61,6 +61,14 @@
             "defaultValue": true,
             "required": true,
             "helpMarkDown": "Enabling this option will reset IIS after installation. The reset is recommended for all changes to take effect."
+        },
+        {
+            "name": "installArguments",
+            "type": "string",
+            "label": "Install arguments",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Optional arguments that will be passed to the installer. Example: `OPT_NO_X86=1`. See https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/?view=aspnetcore-3.1#install-the-hosting-bundle for more info."
         }
     ],
     "execution": {
