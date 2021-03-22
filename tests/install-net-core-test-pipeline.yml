@@ -21,8 +21,35 @@ variables:
 
 
 stages:
+- stage: Temp
+  jobs:
+  - deployment: 'Temp'
+    environment:
+      name: '$(environmentName)'
+      resourceType: 'VirtualMachine'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: InstallNetCoreRuntimeAndHosting@1
+            inputs:
+              version: '3.1'
+              useProxy: false
+              norestart: true
+              iisReset: true
+              installArguments: 'OPT_NO_RUNTIME=1'
+          - task: InstallNetCoreRuntimeAndHosting@1
+            inputs:
+              version: '5.0'
+              useProxy: false
+              norestart: true
+              iisReset: true
+              installArguments: 'OPT_NO_X86=1'
+
+
+
 - stage: 'Provision'
-  condition: succeeded()
+  condition: false
   jobs:
   - job:
     pool:
