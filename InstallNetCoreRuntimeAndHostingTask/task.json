@@ -68,7 +68,7 @@
             "label": "Install arguments",
             "defaultValue": "",
             "required": false,
-            "helpMarkDown": "Optional arguments that will be passed to the installer. Example: `OPT_NO_X86=1`. See https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/?view=aspnetcore-3.1#install-the-hosting-bundle for more info."
+            "helpMarkDown": "Optional arguments that will be passed to the installer. Example: `OPT_NO_ANCM=1 OPT_NO_X86=1`. See [these options](https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/hosting-bundle?view=aspnetcore-5.0#options)for more information."
         }
     ],
     "execution": {
