@@ -16,7 +16,7 @@ pr: none
 
 variables:
   azureSubscription: 'Azure Visual Studio Enterprise'
-  environmentName: "net-core-test-${{ variables['Build.SourceBranchName'] }}-2"
+  environmentName: "net-core-test-${{ variables['Build.SourceBranchName'] }}-3"
   #environmentName: "net-core-test-${{ variables['Build.SourceVersion'] }}"
 
 
@@ -58,6 +58,7 @@ stages:
               useProxy: false
               norestart: true
               iisReset: true
+              installArguments: 'OPT_NO_ANCM=1 OPT_NO_X86=1'
 
 
 - stage: 'Test'
