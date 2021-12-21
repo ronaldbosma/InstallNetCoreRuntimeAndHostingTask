@@ -1,3 +1,8 @@
+# Archived
+
+> This repository has been archived. No new features are added, because .NET Core is included in Microsoft Update now. For more information see [.NET Core coming to Microsoft Update](https://devblogs.microsoft.com/dotnet/net-core-updates-coming-to-microsoft-update/).
+
+
 # Install .NET Core Runtime & Hosting Task
 
 Azure DevOps pipeline task that downloads and installs the latest .NET Core runtime and hosting bundle.
